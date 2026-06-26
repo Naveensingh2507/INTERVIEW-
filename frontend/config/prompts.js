@@ -1,0 +1,3 @@
+export const RESUME_AUDITOR_PROMPT = "";
+export const ACTIVE_INTERVIEWER_PROMPT = "";
+export const POST_INTERVIEW_EVALUATOR_PROMPT = "";
