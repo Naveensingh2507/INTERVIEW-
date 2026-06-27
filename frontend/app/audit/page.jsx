@@ -57,7 +57,7 @@ export default function AuditInputPage() {
     <div style={{ minHeight: '100vh', background: bg, fontFamily: "'Inter', sans-serif", color: textPrimary, transition: 'background 0.3s, color 0.3s' }}>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
-      <div style={{ position: 'fixed', top: '5%', right: '10%', width: '35vw', height: '60vh', background: `radial-gradient(circle, ${t('rgba(16,185,129,0.06)', 'rgba(16,185,129,0.04)')} 0%, transparent 70%)`, pointerEvents: 'none', zIndex: 0 }} />
+      <div style={{ position: 'fixed', top: '5%', right: '10%', width: '35vw', height: '60vh', background: 'radial-gradient(circle, var(--glow-bg) 0%, transparent 70%)', pointerEvents: 'none', zIndex: 0 }} />
 
       <div style={{ width: '100%', padding: '96px 6vw 60px', position: 'relative', zIndex: 1 }}>
 
