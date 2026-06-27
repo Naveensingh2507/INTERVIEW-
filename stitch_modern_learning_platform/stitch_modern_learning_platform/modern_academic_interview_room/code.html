@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HIREVAULT | Interview Room</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&amp;family=Playfair+Display:wght@600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#333637",
+                        "surface-container-high": "#e3e8f9",
+                        "on-secondary-fixed-variant": "#304d40",
+                        "on-error": "#ffffff",
+                        "on-surface": "#161c27",
+                        "surface-bright": "#f9f9ff",
+                        "surface-tint": "#455f88",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#e1e3e4",
+                        "primary-fixed-dim": "#adc7f7",
+                        "outline": "#74777f",
+                        "secondary-fixed": "#c9ead9",
+                        "primary-fixed": "#d6e3ff",
+                        "tertiary-fixed-dim": "#c5c7c8",
+                        "tertiary": "#1e2122",
+                        "surface": "#f9f9ff",
+                        "outline-variant": "#c4c6cf",
+                        "on-tertiary-fixed-variant": "#454748",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#dde2f3",
+                        "inverse-on-surface": "#ecf0ff",
+                        "secondary": "#476558",
+                        "surface-container-highest": "#dde2f3",
+                        "on-surface-variant": "#43474e",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#022016",
+                        "surface-container": "#e8eeff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001b3c",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#2d476f",
+                        "on-tertiary-fixed": "#191c1d",
+                        "on-primary-container": "#86a0cd",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#adcebe",
+                        "on-background": "#161c27",
+                        "on-tertiary-container": "#9d9fa0",
+                        "surface-container-low": "#f1f3ff",
+                        "surface-dim": "#d4daea",
+                        "secondary-container": "#c9ead9",
+                        "inverse-primary": "#adc7f7",
+                        "primary": "#002045",
+                        "inverse-surface": "#2a303d",
+                        "background": "#f9f9ff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#4d6b5d",
+                        "primary-container": "#1a365d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "margin-desktop": "40px",
+                        "unit": "8px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "caption": ["Inter"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-md": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-md": ["Inter"],
+                        "mono-data": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "mono-data": ["14px", {"lineHeight": "20px"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f3ff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #74777f;
+            border-radius: 2px;
+        }
+        .code-editor-glow:focus {
+            box-shadow: 0 0 15px -5px rgba(26, 54, 93, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden selection:bg-primary-container selection:text-white">
+<!-- Header Navigation -->
+<header class="fixed top-0 w-full z-50 border-b border-outline-variant bg-surface h-16">
+<div class="flex justify-between items-center h-full px-gutter max-w-container-max mx-auto">
+<div class="flex items-center gap-stack-md">
+<div class="flex items-center gap-2">
+                https://lh3.googleusercontent.com/aida/AP1WRLvsK6j7k25S2xVUNR5TzKXNOUVDIo2iS9Sx0XH6DbLMzZKk8hQ8Tnj_F7HjHYhnFSmVzUXJw63aAwYLU5sD12y-AI3vRBKguTiKohdnP8jgHgrjrn7d-alB2fA_qrCoZSTLr0R3eaRy9WUVtaotceQQvrsrVdZjdfghEBR6Ko9CnpPjvKpYZrTciLvLc56NHQ-34zw-Ck4IgvII9T5eRRUVGWqPLmVp9bVYFuu-2S_peuCc9lRTVYCJMA
+                <span class="font-headline-md text-headline-md text-primary tracking-tight">HIREVAULT</span>
+</div>
+<span class="font-label-md text-[10px] px-2 py-0.5 bg-surface-container rounded-full text-primary border border-outline-variant uppercase">Interview Active</span>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="flex items-center gap-stack-sm font-mono-data text-mono-data text-primary">
+<span class="material-symbols-outlined text-base">timer</span>
+<span id="countdown">45:00</span>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant"></div>
+<div class="flex gap-stack-md">
+<button class="flex items-center gap-2 px-4 py-2 border border-outline font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-low transition-all duration-200 active:scale-95" id="toggleWhiteboard">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+                    TOGGLE WHITEBOARD
+                </button>
+<button class="bg-error text-white px-4 py-2 font-label-md text-label-md hover:brightness-110 transition-all duration-200 active:scale-95">
+                    END INTERVIEW
+                </button>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Split Screen -->
+<main class="flex h-screen pt-16 transition-all duration-500 ease-in-out" id="layoutWrapper">
+<!-- Left Panel: Interviewer View -->
+<section class="flex-1 relative flex flex-col items-center justify-center border-r border-outline-variant bg-surface-container-low" id="interviewerPanel">
+<!-- Subtle Academic Texture/Glow -->
+<div class="absolute inset-0 pointer-events-none opacity-10">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-fixed-dim blur-[120px] rounded-full"></div>
+</div>
+<!-- Interviewer Interaction Area -->
+<div class="relative z-10 w-full max-w-2xl px-stack-lg text-center">
+<div class="space-y-stack-sm">
+<h2 class="font-headline-lg text-headline-lg text-primary-container">Interviewer is listening...</h2>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest animate-pulse">Transcribing real-time feedback</p>
+</div>
+</div>
+<!-- PIP Webcam Box -->
+<div class="absolute bottom-gutter left-gutter w-48 h-32 rounded-lg border border-outline-variant overflow-hidden bg-surface-container-lowest shadow-lg">
+<div class="absolute inset-0 flex items-center justify-center">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL7xsY-bExNMIvja0TL6XK4yq08siVgQZfj8VEu_zw9Xh9yWdnua31PGwPCe0-iKErLr58DhfClv2xuzPEIxU8LIeb9q5Gf5uTsTEPulzpx73cXylXm2zBVbuFdCPRsZ9Xtajbuq3QJTpVjdDOmP-eRa7y-CpquASSrimsc8ino7z2Jkuwl76SURk6usVkhiw9XZVAeOobnbPmccBDkSxjwVdlWo79XGrzh-E-VF5KM2w18I6KTvAE"/>
+</div>
+<div class="absolute bottom-2 left-2 flex items-center gap-2 bg-black/40 px-2 py-1 rounded backdrop-blur-sm">
+<div class="w-2 h-2 rounded-full bg-error animate-pulse"></div>
+<span class="font-label-md text-[10px] text-white">LIVE</span>
+</div>
+</div>
+<!-- AI Status Indicators -->
+<div class="absolute bottom-gutter right-gutter flex gap-stack-md">
+<div class="flex items-center gap-2 bg-surface border border-outline-variant px-3 py-1.5 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-sm text-primary">mic</span>
+<span class="font-label-md text-[11px] text-on-surface-variant">INPUT: 48kHz</span>
+</div>
+<div class="flex items-center gap-2 bg-surface border border-outline-variant px-3 py-1.5 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-sm text-secondary">school</span>
+<span class="font-label-md text-[11px] text-on-surface-variant">MODEL: GPT-4o</span>
+</div>
+</div>
+</section>
+<!-- Right Panel: Technical Whiteboard (Clean Light Mode) -->
+<section class="flex-1 flex flex-col bg-surface-container-lowest transition-all duration-500 ease-in-out" id="whiteboardPanel">
+<div class="flex items-center justify-between px-6 h-12 bg-surface border-b border-outline-variant">
+<div class="flex gap-stack-md">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-error/40 border border-error/60"></span>
+<span class="w-3 h-3 rounded-full bg-secondary-container border border-secondary"></span>
+<span class="w-3 h-3 rounded-full bg-primary/20 border border-primary"></span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant ml-4 uppercase tracking-tighter">solution.py</span>
+</div>
+<div class="flex items-center gap-stack-md">
+<span class="font-mono-data text-[11px] text-on-surface-variant">Ln 1, Col 1</span>
+<span class="font-mono-data text-[11px] text-on-surface-variant">UTF-8</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">settings</span>
+</button>
+</div>
+</div>
+<div class="flex-1 relative font-mono-data text-mono-data leading-relaxed flex">
+<!-- Line Numbers -->
+<div class="w-12 bg-surface-container-low border-r border-outline-variant pt-4 flex flex-col items-center text-outline select-none">
+<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+</div>
+<!-- Textarea Editor -->
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 resize-none p-4 text-on-surface placeholder:text-outline-variant code-editor-glow" placeholder="# Type your technical solution here...
+def optimal_strategy(n, k):
+    # Implement your logic here
+    pass" spellcheck="false"></textarea>
+</div>
+<!-- Editor Action Bar -->
+<div class="p-4 border-t border-outline-variant bg-surface-container-low flex justify-between items-center">
+<div class="flex gap-stack-md">
+<button class="bg-primary-container text-white px-4 py-2 font-label-md text-label-md hover:bg-primary transition-all duration-200">
+                    RUN CODE
+                </button>
+<button class="text-on-surface-variant px-4 py-2 font-label-md text-label-md hover:text-on-surface transition-colors">
+                    RESET TEMPLATE
+                </button>
+</div>
+<div class="text-secondary font-label-md text-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                ACADEMIC HONESTY ACTIVE
+            </div>
+</div>
+</section>
+</main>
+<!-- Footer Overlay (Task Prompt) -->
+<div class="fixed bottom-0 left-0 w-full p-gutter pointer-events-none">
+<div class="max-w-2xl mx-auto bg-surface/90 backdrop-blur-md border border-outline-variant p-5 rounded-xl shadow-xl pointer-events-auto">
+<div class="flex gap-stack-md items-start">
+<div class="p-2 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary">assignment</span>
+</div>
+<div class="space-y-1">
+<span class="font-label-md text-label-md text-primary uppercase">Problem Statement</span>
+<p class="font-body-md text-body-md text-on-surface-variant leading-snug">
+                    Design a system that handles 100k requests per second with less than 50ms latency. Explain your choice of database, caching strategy, and load balancing approach.
+                </p>
+</div>
+</div>
+</div>
+</div>
+<script>
+    // Toggle Whiteboard Logic
+    const toggleBtn = document.getElementById('toggleWhiteboard');
+    const whiteboard = document.getElementById('whiteboardPanel');
+    let isWhiteboardVisible = true;
+
+    toggleBtn.addEventListener('click', () => {
+        isWhiteboardVisible = !isWhiteboardVisible;
+        if (!isWhiteboardVisible) {
+            whiteboard.style.transform = 'translateX(100%)';
+            whiteboard.style.width = '0%';
+            whiteboard.style.opacity = '0';
+            setTimeout(() => whiteboard.classList.add('hidden'), 500);
+        } else {
+            whiteboard.classList.remove('hidden');
+            setTimeout(() => {
+                whiteboard.style.transform = 'translateX(0)';
+                whiteboard.style.width = '50%';
+                whiteboard.style.opacity = '1';
+            }, 10);
+        }
+    });
+
+    // Countdown Timer Logic
+    let timeLeft = 45 * 60;
+    const countdownEl = document.getElementById('countdown');
+
+    setInterval(() => {
+        if (timeLeft <= 0) return;
+        timeLeft--;
+        const mins = Math.floor(timeLeft / 60);
+        const secs = timeLeft % 60;
+        countdownEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        
+        if (timeLeft < 300) {
+            countdownEl.classList.add('text-error');
+        }
+    }, 1000);
+
+    // Simple typing micro-interaction
+    const textarea = document.querySelector('textarea');
+    textarea.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            textarea.value = textarea.value.substring(0, start) + "    " + textarea.value.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + 4;
+        }
+    });
+</script>
+</body></html>

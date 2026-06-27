@@ -1,31 +1,34 @@
 "use client";
-import React, { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useState, Suspense } from 'react';
+import { useRouter } from 'next/navigation';
 import { supabase } from '../../lib/supabaseClient';
 
-export default function Login() {
+function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  
-  // Use a fallback for useSearchParams in case it's not wrapped in suspense properly
-  // Or just use window.location if needed, but Next.js usually handles it.
-  const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-  const redirectTo = searchParams?.get('redirectTo') || '/dashboard';
-  
   const router = useRouter();
+
+  // Safely read redirectTo from URL
+  const getRedirect = () => {
+    try {
+      return new URLSearchParams(window.location.search).get('redirectTo') || '/dashboard';
+    } catch {
+      return '/dashboard';
+    }
+  };
 
   const handleAuth = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'your_project_url_here') {
-      setTimeout(() => {
-        router.push(redirectTo);
-      }, 500);
+    const redirectTo = getRedirect();
+
+    // If Supabase is not configured, skip auth and go to dashboard
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes('your_project')) {
+      setTimeout(() => router.push(redirectTo), 400);
       return;
     }
 
@@ -36,7 +39,9 @@ export default function Login() {
       } else {
         const { error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
-        alert("Check your email for confirmation!");
+        setError('✅ Check your email to confirm your account!');
+        setLoading(false);
+        return;
       }
       router.push(redirectTo);
     } catch (err) {
@@ -46,53 +51,157 @@ export default function Login() {
     }
   };
 
+  const inputStyle = {
+    width: '100%',
+    background: 'var(--input-bg)',
+    border: '1px solid var(--input-border)',
+    borderRadius: 10,
+    padding: '13px 16px',
+    fontSize: 15,
+    color: 'var(--text-primary)',
+    outline: 'none',
+    fontFamily: "'Inter', sans-serif",
+    transition: 'border-color 0.2s',
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative pt-16">
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-600 rounded-full blur-[150px] opacity-20 pointer-events-none"></div>
-      
-      <div className="w-full max-w-md bg-zinc-900/80 backdrop-blur border border-zinc-800 p-8 rounded-2xl shadow-2xl relative z-10">
-        <h2 className="text-3xl font-bold text-white mb-2">{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
-        <p className="text-zinc-400 mb-8">{isLogin ? 'Log in to access your HireReady reports.' : 'Sign up to track your interview prep.'}</p>
-        
-        {error && <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-lg text-sm mb-6">{error}</div>}
-        
-        <form onSubmit={handleAuth} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm text-zinc-400 font-medium">Email</label>
-            <input 
-              type="email" 
-              required 
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-3 text-white focus:outline-none focus:border-violet-500 transition-colors"
+    <div style={{
+      minHeight: '100vh',
+      background: 'var(--bg)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '80px 20px 40px',
+      fontFamily: "'Inter', sans-serif",
+      position: 'relative',
+    }}>
+      {/* Glow */}
+      <div style={{
+        position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%, -50%)',
+        width: '50vw', height: '50vh',
+        background: 'radial-gradient(ellipse, rgba(16,185,129,0.08) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+
+      <div style={{
+        width: '100%', maxWidth: 440,
+        background: 'var(--card-bg)',
+        border: '1px solid var(--card-border)',
+        borderRadius: 20,
+        padding: '44px 40px',
+        boxShadow: 'var(--shadow-form)',
+        position: 'relative', zIndex: 1,
+      }}>
+        {/* Logo */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 32 }}>
+          <div style={{ width: 36, height: 36, borderRadius: 9, background: 'linear-gradient(135deg, #10b981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: 17, color: '#fff' }}>H</div>
+          <span style={{ fontWeight: 800, fontSize: 20, color: 'var(--text-primary)', letterSpacing: '-0.4px' }}>HireVault</span>
+        </div>
+
+        <h1 style={{ fontSize: 28, fontWeight: 900, color: 'var(--text-primary)', marginBottom: 8, letterSpacing: '-0.02em' }}>
+          {isLogin ? 'Welcome back' : 'Create account'}
+        </h1>
+        <p style={{ fontSize: 15, color: 'var(--text-sub)', marginBottom: 32 }}>
+          {isLogin ? 'Sign in to access your HireVault dashboard.' : 'Start your AI interview prep journey.'}
+        </p>
+
+        {/* Error / success */}
+        {error && (
+          <div style={{
+            background: error.startsWith('✅') ? 'rgba(16,185,129,0.08)' : 'rgba(239,68,68,0.08)',
+            border: `1px solid ${error.startsWith('✅') ? 'rgba(16,185,129,0.25)' : 'rgba(239,68,68,0.25)'}`,
+            color: error.startsWith('✅') ? '#10b981' : '#ef4444',
+            padding: '12px 16px', borderRadius: 10, fontSize: 14, marginBottom: 24,
+          }}>
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: 8 }}>
+              Email
+            </label>
+            <input
+              id="login-email"
+              type="email"
+              required
+              placeholder="you@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
+              style={inputStyle}
+              onFocus={e => e.target.style.borderColor = 'rgba(16,185,129,0.5)'}
+              onBlur={e => e.target.style.borderColor = 'var(--input-border)'}
             />
           </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm text-zinc-400 font-medium">Password</label>
-            <input 
-              type="password" 
-              required 
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-3 text-white focus:outline-none focus:border-violet-500 transition-colors"
+
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: 8 }}>
+              Password
+            </label>
+            <input
+              id="login-password"
+              type="password"
+              required
+              placeholder="••••••••"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
+              style={inputStyle}
+              onFocus={e => e.target.style.borderColor = 'rgba(16,185,129,0.5)'}
+              onBlur={e => e.target.style.borderColor = 'var(--input-border)'}
             />
           </div>
-          <button 
-            type="submit" 
+
+          <button
+            id="login-submit"
+            type="submit"
             disabled={loading}
-            className="w-full py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold rounded-lg mt-4 hover:opacity-90 transition-opacity disabled:opacity-50"
+            style={{
+              marginTop: 8,
+              padding: '15px',
+              background: loading ? 'rgba(16,185,129,0.5)' : '#10b981',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 10,
+              fontSize: 15,
+              fontWeight: 800,
+              cursor: loading ? 'not-allowed' : 'pointer',
+              boxShadow: '0 0 30px rgba(16,185,129,0.35)',
+              transition: 'all 0.2s',
+              fontFamily: "'Inter', sans-serif",
+              letterSpacing: '0.02em',
+            }}
+            onMouseEnter={e => { if (!loading) { e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = 'translateY(-2px)'; } }}
+            onMouseLeave={e => { e.currentTarget.style.background = loading ? 'rgba(16,185,129,0.5)' : '#10b981'; e.currentTarget.style.transform = 'translateY(0)'; }}
           >
-            {loading ? 'Processing...' : (isLogin ? 'Log In' : 'Sign Up')}
+            {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
           </button>
         </form>
-        
-        <p className="text-center mt-6 text-zinc-500 text-sm">
-          {isLogin ? "Don't have an account? " : "Already have an account? "}
-          <button onClick={() => setIsLogin(!isLogin)} className="text-violet-400 hover:text-violet-300 font-medium">
-            {isLogin ? 'Sign up' : 'Log in'}
+
+        <div style={{ height: 1, background: 'var(--divider)', margin: '28px 0' }} />
+
+        <p style={{ textAlign: 'center', fontSize: 14, color: 'var(--text-muted)' }}>
+          {isLogin ? "Don't have an account? " : 'Already have an account? '}
+          <button
+            onClick={() => { setIsLogin(!isLogin); setError(null); }}
+            style={{ background: 'none', border: 'none', color: '#10b981', fontWeight: 700, cursor: 'pointer', fontSize: 14, fontFamily: "'Inter', sans-serif" }}
+          >
+            {isLogin ? 'Sign up free' : 'Sign in'}
           </button>
         </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: 40, height: 40, border: '2px solid rgba(16,185,129,0.2)', borderTopColor: '#10b981', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Audit Results | HIREVAULT</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#7c008e",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "bg-deep": "#0a0a0a",
+                    "outline-variant": "#464555",
+                    "error": "#ffb4ab",
+                    "secondary": "#fbabff",
+                    "inverse-primary": "#4d44e3",
+                    "on-surface-variant": "#c7c4d8",
+                    "surface-container-lowest": "#040e1f",
+                    "on-tertiary-container": "#67f4b7",
+                    "surface-container-low": "#111c2d",
+                    "on-surface": "#d8e3fb",
+                    "surface-container-high": "#1f2a3c",
+                    "error-container": "#93000a",
+                    "outline": "#918fa1",
+                    "inverse-on-surface": "#263143",
+                    "on-background": "#d8e3fb",
+                    "secondary-fixed": "#ffd6fd",
+                    "primary": "#c3c0ff",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "surface-dim": "#081425",
+                    "on-secondary": "#580065",
+                    "on-tertiary-fixed": "#002113",
+                    "on-error": "#690005",
+                    "surface-container-highest": "#2a3548",
+                    "on-secondary-container": "#ffd8fd",
+                    "tertiary-fixed": "#6ffbbe",
+                    "background": "#081425",
+                    "tertiary": "#4edea3",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "surface": "#081425",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#2a3548",
+                    "on-tertiary": "#003824",
+                    "tertiary-container": "#006e4b",
+                    "border-slate": "#1e293b",
+                    "surface-container": "#152031",
+                    "on-primary": "#1d00a5",
+                    "on-secondary-fixed": "#36003e",
+                    "on-primary-fixed": "#0f0069",
+                    "text-muted": "#94a3b8",
+                    "primary-fixed": "#e2dfff",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "inverse-surface": "#d8e3fb",
+                    "surface-bright": "#2f3a4c",
+                    "surface-tint": "#c3c0ff",
+                    "secondary-fixed-dim": "#fbabff",
+                    "primary-container": "#4f46e5",
+                    "on-primary-container": "#dad7ff",
+                    "danger-rose": "#f43f5e",
+                    "secondary-container": "#ae05c6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "mono-data": ["JetBrains Mono"],
+                    "body-base": ["Inter"],
+                    "mono-label": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "mono-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0a0a0a;
+            color: #d8e3fb;
+            -webkit-font-smoothing: antialiased;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #111111;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 2px;
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 1s ease-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        .technical-gradient {
+            background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+        }
+    </style>
+</head>
+<body class="font-body-base text-body-base selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 border-b border-slate-800 bg-bg-deep">
+<div class="flex justify-between items-center h-16 px-gutter max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<span class="font-display-lg text-display-lg-mobile tracking-tighter text-primary dark:text-primary-fixed-dim">HIREVAULT</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-base text-body-base" href="#">Dashboard</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-base text-body-base" href="#">Audit</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-base text-body-base" href="#">Interview</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-low p-2 rounded-full transition-all duration-200">account_circle</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface p-2 rounded-full transition-all duration-200">logout</button>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-12 px-gutter max-w-container-max mx-auto min-h-screen">
+<!-- Dashboard Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-stack-lg gap-stack-md">
+<div>
+<span class="font-mono-label text-mono-label text-primary uppercase tracking-widest block mb-2">Analysis Complete</span>
+<h1 class="font-display-lg text-display-lg-mobile text-on-surface">ATS Optimization Audit</h1>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 bg-surface-container-high border border-slate-800 rounded-lg font-mono-label text-mono-label uppercase tracking-wider hover:bg-surface-container-highest transition-all">Download Report</button>
+<button class="px-6 py-2 bg-primary-container text-on-primary-container rounded-lg font-mono-label text-mono-label uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all">Re-Scan Resume</button>
+</div>
+</div>
+<!-- Main Score & Metrics Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-stack-lg">
+<!-- Main Score Ring -->
+<div class="lg:col-span-4 bg-[#111111] border border-slate-800 p-8 flex flex-col items-center justify-center relative overflow-hidden group">
+
+<div class="relative w-48 h-48 mb-6">
+<svg class="w-full h-full">
+<circle class="text-slate-800" cx="96" cy="96" fill="transparent" r="85" stroke="currentColor" stroke-width="10"></circle>
+<circle class="text-primary progress-ring__circle" cx="96" cy="96" fill="transparent" r="85" stroke="currentColor" stroke-dasharray="534" stroke-dashoffset="117.48" stroke-linecap="round" stroke-width="10"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display-lg text-display-lg text-on-surface">78</span>
+<span class="font-mono-label text-mono-label text-text-muted">ATS SCORE</span>
+</div>
+</div>
+<p class="text-center text-body-sm font-body-sm text-on-surface-variant max-w-[240px]">Your resume is performing better than 82% of applicants for Senior Software Engineer roles.</p>
+</div>
+<!-- Metric Cards Grid -->
+<div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-stack-md">
+<!-- Keywords -->
+<div class="bg-[#111111] border border-slate-800 p-6 flex flex-col justify-between hover:border-primary/50 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono-label text-mono-label text-text-muted">KEYWORDS</span>
+<span class="material-symbols-outlined text-primary">key</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-primary block mb-1">64%</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Matched 14/22 critical industry terms found in target JD.</p>
+</div>
+</div>
+<!-- Impact -->
+<div class="bg-[#111111] border border-slate-800 p-6 flex flex-col justify-between hover:border-tertiary/50 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono-label text-mono-label text-text-muted">IMPACT</span>
+<span class="material-symbols-outlined text-tertiary">trending_up</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-tertiary block mb-1">High</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Strong use of action verbs and quantifiable metrics detected.</p>
+</div>
+</div>
+<!-- Formatting -->
+<div class="bg-[#111111] border border-slate-800 p-6 flex flex-col justify-between hover:border-primary/50 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono-label text-mono-label text-text-muted">FORMATTING</span>
+<span class="material-symbols-outlined text-primary">logout</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-on-surface block mb-1">Perfect</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Standard 1-column layout. All fonts are ATS-readable.</p>
+</div>
+</div>
+<!-- Fundamentals -->
+<div class="bg-[#111111] border border-slate-800 p-6 flex flex-col justify-between hover:border-danger-rose/50 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono-label text-mono-label text-text-muted">FUNDAMENTALS</span>
+<span class="material-symbols-outlined text-danger-rose">warning</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-danger-rose block mb-1">Critical</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Missing LinkedIn URL and GitHub repository links in header.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Correction Feed & Missing Keywords -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Correction Feed -->
+<div class="lg:col-span-2">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-md text-headline-md text-on-surface">Optimization Feed</h3>
+<span class="font-mono-label text-mono-label text-text-muted">8 IMPROVEMENTS FOUND</span>
+</div>
+<div class="space-y-stack-md max-h-[600px] overflow-y-auto pr-4 custom-scrollbar">
+<!-- Correction Card 1 -->
+<div class="bg-[#111111] border border-slate-800 overflow-hidden">
+<div class="bg-surface-container px-4 py-2 border-b border-slate-800 flex items-center justify-between">
+<span class="font-mono-label text-mono-label text-primary uppercase">Experience Section</span>
+<span class="px-2 py-0.5 bg-danger-rose/10 text-danger-rose text-[10px] font-bold rounded">VAGUE ACTION</span>
+</div>
+<div class="p-4 space-y-4">
+<div class="space-y-2">
+<span class="font-mono-label text-mono-label text-danger-rose uppercase text-[10px]">Original</span>
+<div class="bg-danger-rose/5 border-l-2 border-danger-rose p-3 font-mono-data text-mono-data text-on-surface-variant italic">
+                                    "Helped develop a React application for the client."
+                                </div>
+</div>
+<div class="space-y-2">
+<span class="font-mono-label text-mono-label text-tertiary uppercase text-[10px]">Suggested Fix</span>
+<div class="bg-tertiary/5 border-l-2 border-tertiary p-3 font-mono-data text-mono-data text-on-surface">
+                                    "Architected and deployed a scalable <span class="text-tertiary font-bold">React/Redux</span> dashboard, reducing initial load time by <span class="text-tertiary font-bold">40%</span> for 50k+ monthly active users."
+                                </div>
+</div>
+</div>
+</div>
+<!-- Correction Card 2 -->
+<div class="bg-[#111111] border border-slate-800 overflow-hidden">
+<div class="bg-surface-container px-4 py-2 border-b border-slate-800 flex items-center justify-between">
+<span class="font-mono-label text-mono-label text-primary uppercase">Summary Section</span>
+<span class="px-2 py-0.5 bg-danger-rose/10 text-danger-rose text-[10px] font-bold rounded">MISSING SKILLS</span>
+</div>
+<div class="p-4 space-y-4">
+<div class="space-y-2">
+<span class="font-mono-label text-mono-label text-danger-rose uppercase text-[10px]">Original</span>
+<div class="bg-danger-rose/5 border-l-2 border-danger-rose p-3 font-mono-data text-mono-data text-on-surface-variant italic">
+                                    "Experienced developer looking for a challenging role."
+                                </div>
+</div>
+<div class="space-y-2">
+<span class="font-mono-label text-mono-label text-tertiary uppercase text-[10px]">Suggested Fix</span>
+<div class="bg-tertiary/5 border-l-2 border-tertiary p-3 font-mono-data text-mono-data text-on-surface">
+                                    "Senior Frontend Engineer with 5+ years expertise in <span class="text-tertiary font-bold">TypeScript, GraphQL, and System Design</span>. Proven track record of leading distributed teams in fintech environments."
+                                </div>
+</div>
+</div>
+</div>
+<!-- Correction Card 3 -->
+<div class="bg-[#111111] border border-slate-800 overflow-hidden">
+<div class="bg-surface-container px-4 py-2 border-b border-slate-800 flex items-center justify-between">
+<span class="font-mono-label text-mono-label text-primary uppercase">Education Section</span>
+<span class="px-2 py-0.5 bg-danger-rose/10 text-danger-rose text-[10px] font-bold rounded">FORMAT ERROR</span>
+</div>
+<div class="p-4 space-y-4">
+<div class="space-y-2">
+<span class="font-mono-label text-mono-label text-danger-rose uppercase text-[10px]">Original</span>
+<div class="bg-danger-rose/5 border-l-2 border-danger-rose p-3 font-mono-data text-mono-data text-on-surface-variant italic">
+                                    "B.Tech in Computer Science - 2022 Graduate"
+                                </div>
+</div>
+<div class="space-y-2">
+<span class="font-mono-label text-mono-label text-tertiary uppercase text-[10px]">Suggested Fix</span>
+<div class="bg-tertiary/5 border-l-2 border-tertiary p-3 font-mono-data text-mono-data text-on-surface">
+                                    "Bachelor of Technology in Computer Science | <span class="text-tertiary font-bold">IIT Delhi</span> | 2018 – 2022"
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Panel: Missing Keywords & Quick Stats -->
+<div class="space-y-gutter">
+<div class="bg-[#111111] border border-slate-800 p-6">
+<h3 class="font-mono-label text-mono-label text-danger-rose uppercase tracking-widest mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">error</span>
+                        Missing Keywords
+                    </h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-error-container/20 border border-error-container text-error font-mono-label text-[11px] rounded-full">KUBERNETES</span>
+<span class="px-3 py-1 bg-error-container/20 border border-error-container text-error font-mono-label text-[11px] rounded-full">AWS LAMBDA</span>
+<span class="px-3 py-1 bg-error-container/20 border border-error-container text-error font-mono-label text-[11px] rounded-full">CI/CD PIPELINES</span>
+<span class="px-3 py-1 bg-error-container/20 border border-error-container text-error font-mono-label text-[11px] rounded-full">REDIS</span>
+<span class="px-3 py-1 bg-error-container/20 border border-error-container text-error font-mono-label text-[11px] rounded-full">MICROSERVICES</span>
+<span class="px-3 py-1 bg-error-container/20 border border-error-container text-error font-mono-label text-[11px] rounded-full">TERRAFORM</span>
+<span class="px-3 py-1 bg-error-container/20 border border-error-container text-error font-mono-label text-[11px] rounded-full">JEST</span>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-800">
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-4">These technical terms were prominent in the job description but not detected in your resume.</p>
+<button class="w-full py-2 bg-surface-container-high border border-slate-800 text-on-surface font-mono-label text-mono-label uppercase tracking-widest hover:border-primary transition-all">Generate Summary with Keywords</button>
+</div>
+</div>
+<!-- JD Comparison Chart Placeholder -->
+<div class="bg-[#111111] border border-slate-800 p-6 relative overflow-hidden group">
+<div class="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-cover bg-center" data-alt="A sophisticated radar chart or spider diagram on a dark interface showing resume skill alignment against a job description. The design uses neon indigo and emerald green lines on a deep charcoal background with a technical grid overlay, evoking high-end data visualization software." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAe4b0O-GOlickXfaARgb5Vip8Ja5_etT5R3cxYiF3xTSxUWJArxJfwlasLA0kmazi-QFtYM4373czmgw6au_s7DunT5TzaF41VHpUrN4ty3slly1y5lHSTaKzWhm3Rh3afMVda6xJcMw6nQ4Itj4fBfZUwV9Ox8LHqMDdvaNpmMqT4DTrRlhuMHVBLRmj_jGay07FmLZG7Z8jwEvVaNXHZ3O0O_6gcWvQWoQ6kEVbh-YXFyr_Krq-e')"></div>
+<div class="relative z-10">
+<h4 class="font-mono-label text-mono-label text-on-surface uppercase mb-4">JD Match Radar</h4>
+<div class="h-40 flex items-center justify-center">
+<span class="font-mono-label text-mono-label text-text-muted text-center">Interactive Visualization<br/>Available in Pro Plan</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-8 border-t border-slate-800 bg-bg-deep mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center px-gutter max-w-container-max mx-auto gap-stack-md">
+<span class="font-mono-label text-mono-label text-on-surface-variant">© 2024 HIREVAULT. Powered by Next.js, FastAPI, Groq.</span>
+<div class="flex gap-8">
+<a class="font-mono-label text-mono-label uppercase tracking-widest text-text-muted hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="font-mono-label text-mono-label uppercase tracking-widest text-text-muted hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-mono-label text-mono-label uppercase tracking-widest text-text-muted hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for the progress ring
+        window.addEventListener('load', () => {
+            const circle = document.querySelector('.progress-ring__circle');
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            const score = 78;
+            const offset = circumference - (score / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        });
+
+        // Add subtle hover effect logic for correction cards
+        document.querySelectorAll('.bg-[#111111]').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+                card.style.transition = 'transform 0.2s ease-out';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+</body></html>

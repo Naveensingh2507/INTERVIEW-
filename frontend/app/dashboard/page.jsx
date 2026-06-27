@@ -10,39 +10,51 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white p-8 pt-24 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">Welcome to your Dashboard</h1>
-      <p className="text-zinc-400 mb-12">Logged in as {user?.email}</p>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-2xl">
-          <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-violet-500 shadow-[0_0_10px_rgba(139,92,246,0.8)]"></div>
-            Recent Resume Audits
-          </h2>
-          <div className="flex flex-col gap-3 text-sm text-zinc-400">
-            <div className="p-4 bg-zinc-950 rounded-xl border border-zinc-800/50 flex justify-between items-center hover:border-violet-500/30 transition-colors cursor-pointer">
-              <span>Frontend Engineer Resume</span>
-              <span className="font-bold text-white px-3 py-1 bg-violet-500/20 rounded border border-violet-500/30">Score: 78</span>
-            </div>
-            <div className="p-4 bg-zinc-950 rounded-xl border border-zinc-800/50 flex justify-between items-center hover:border-violet-500/30 transition-colors cursor-pointer">
-              <span>Fullstack Developer Resume</span>
-              <span className="font-bold text-white px-3 py-1 bg-emerald-500/20 rounded border border-emerald-500/30">Score: 82</span>
-            </div>
-          </div>
+    <div className="min-h-screen bg-[#0a0a0a] text-zinc-200 p-8 pt-24">
+      <div className="max-w-5xl mx-auto">
+
+        <div className="mb-10">
+          <h1 className="text-4xl font-extrabold text-white mb-2">Dashboard</h1>
+          <p className="text-zinc-400">Logged in as <span className="text-zinc-300">{user?.email}</span></p>
         </div>
-        
-        <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-2xl">
-          <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-fuchsia-500 shadow-[0_0_10px_rgba(217,70,239,0.8)]"></div>
-            Recent Mock Interviews
-          </h2>
-          <div className="flex flex-col gap-3 text-sm text-zinc-400">
-            <div className="p-4 bg-zinc-950 rounded-xl border border-zinc-800/50 flex justify-between items-center hover:border-fuchsia-500/30 transition-colors cursor-pointer">
-              <span>Google - SDE-1 (DSA)</span>
-              <span className="font-bold text-white px-3 py-1 bg-fuchsia-500/20 rounded border border-fuchsia-500/30">Score: 81</span>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+          {/* Recent Resume Audits */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+            <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+              <div className="w-2.5 h-2.5 rounded-full bg-indigo-500"></div>
+              Recent Resume Audits
+            </h2>
+            <div className="flex flex-col gap-3 text-sm">
+              <div className="p-4 bg-zinc-800/50 rounded-xl border border-zinc-700 flex justify-between items-center hover:border-zinc-600 transition-colors">
+                <span className="font-medium text-zinc-200">Frontend Engineer Resume</span>
+                <span className="font-bold text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/20">78 / 100</span>
+              </div>
+              <div className="p-4 bg-zinc-800/50 rounded-xl border border-zinc-700 flex justify-between items-center hover:border-zinc-600 transition-colors">
+                <span className="font-medium text-zinc-200">Fullstack Developer Resume</span>
+                <span className="font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20">82 / 100</span>
+              </div>
             </div>
           </div>
+
+          {/* Recent Mock Interviews */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+            <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+              <div className="w-2.5 h-2.5 rounded-full bg-fuchsia-500"></div>
+              Recent Mock Interviews
+            </h2>
+            <div className="flex flex-col gap-3 text-sm">
+              <div className="p-4 bg-zinc-800/50 rounded-xl border border-zinc-700 flex justify-between items-center hover:border-zinc-600 transition-colors">
+                <div>
+                  <span className="font-medium text-zinc-200 block">Google — SDE-1</span>
+                  <span className="text-zinc-500 text-xs">DSA &amp; Problem Solving</span>
+                </div>
+                <span className="font-bold text-fuchsia-400 bg-fuchsia-500/10 px-3 py-1 rounded-lg border border-fuchsia-500/20">81 / 100</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

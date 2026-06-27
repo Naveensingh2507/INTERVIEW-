@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Audit Results | HIREVAULT</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "tertiary-container": "#333637",
+                "surface-container-high": "#e3e8f9",
+                "on-secondary-fixed-variant": "#304d40",
+                "on-error": "#ffffff",
+                "on-surface": "#161c27",
+                "surface-bright": "#f9f9ff",
+                "surface-tint": "#455f88",
+                "error-container": "#ffdad6",
+                "tertiary-fixed": "#e1e3e4",
+                "primary-fixed-dim": "#adc7f7",
+                "outline": "#74777f",
+                "secondary-fixed": "#c9ead9",
+                "primary-fixed": "#d6e3ff",
+                "tertiary-fixed-dim": "#c5c7c8",
+                "tertiary": "#1e2122",
+                "surface": "#f9f9ff",
+                "outline-variant": "#c4c6cf",
+                "on-tertiary-fixed-variant": "#454748",
+                "error": "#ba1a1a",
+                "surface-variant": "#dde2f3",
+                "inverse-on-surface": "#ecf0ff",
+                "secondary": "#476558",
+                "surface-container-highest": "#dde2f3",
+                "on-surface-variant": "#43474e",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary-fixed": "#022016",
+                "surface-container": "#e8eeff",
+                "on-secondary": "#ffffff",
+                "on-primary-fixed": "#001b3c",
+                "on-primary": "#ffffff",
+                "on-primary-fixed-variant": "#2d476f",
+                "on-tertiary-fixed": "#191c1d",
+                "on-primary-container": "#86a0cd",
+                "on-error-container": "#93000a",
+                "secondary-fixed-dim": "#adcebe",
+                "on-background": "#161c27",
+                "on-tertiary-container": "#9d9fa0",
+                "surface-container-low": "#f1f3ff",
+                "surface-dim": "#d4daea",
+                "secondary-container": "#c9ead9",
+                "inverse-primary": "#adc7f7",
+                "primary": "#002045",
+                "inverse-surface": "#2a303d",
+                "background": "#f9f9ff",
+                "on-tertiary": "#ffffff",
+                "on-secondary-container": "#4d6b5d",
+                "primary-container": "#1a365d"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "margin-mobile": "16px",
+                "container-max": "1280px",
+                "gutter": "24px",
+                "margin-desktop": "40px",
+                "unit": "8px",
+                "stack-sm": "8px",
+                "stack-md": "16px",
+                "stack-lg": "32px"
+        },
+        "fontFamily": {
+                "body-lg": ["Inter"],
+                "caption": ["Inter"],
+                "display-lg": ["Playfair Display"],
+                "headline-md": ["Playfair Display"],
+                "headline-lg": ["Playfair Display"],
+                "label-md": ["Inter"],
+                "headline-lg-mobile": ["Playfair Display"],
+                "body-md": ["Inter"],
+                "mono-data": ["JetBrains Mono"],
+                "mono-label": ["JetBrains Mono"]
+        },
+        "fontSize": {
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "headline-lg-mobile": ["28px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "mono-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+        }
+      },
+    },
+  }
+</script>
+<style>
+        body {
+            background-color: #f9f9ff;
+            color: #161c27;
+            -webkit-font-smoothing: antialiased;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f3ff;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c4c6cf;
+            border-radius: 3px;
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 1s ease-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        .diff-added {
+            background-color: #f0fdf4;
+            border-left: 4px solid #166534;
+        }
+        .diff-removed {
+            background-color: #fef2f2;
+            border-left: 4px solid #991b1b;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-primary/20">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 border-b border-outline-variant bg-surface-container-lowest/80 backdrop-blur-md">
+<div class="flex justify-between items-center h-16 px-gutter max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+https://lh3.googleusercontent.com/aida/AP1WRLvsK6j7k25S2xVUNR5TzKXNOUVDIo2iS9Sx0XH6DbLMzZKk8hQ8Tnj_F7HjHYhnFSmVzUXJw63aAwYLU5sD12y-AI3vRBKguTiKohdnP8jgHgrjrn7d-alB2fA_qrCoZSTLr0R3eaRy9WUVtaotceQQvrsrVdZjdfghEBR6Ko9CnpPjvKpYZrTciLvLc56NHQ-34zw-Ck4IgvII9T5eRRUVGWqPLmVp9bVYFuu-2S_peuCc9lRTVYCJMA
+<span class="font-display-lg text-[24px] tracking-tight text-primary">HIREVAULT</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Dashboard</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Audit</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Interview</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary p-2 transition-all">account_circle</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-error p-2 transition-all">logout</button>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-12 px-gutter max-w-container-max mx-auto min-h-screen">
+<!-- Dashboard Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-stack-lg gap-stack-md">
+<div>
+<span class="font-mono-label text-mono-label text-primary uppercase tracking-widest block mb-2">Analysis Complete</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">ATS Optimization Audit</h1>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-2 bg-surface-container-low border border-outline-variant text-on-surface-variant rounded font-label-md text-label-md uppercase tracking-wider hover:bg-surface-container transition-all">Download Report</button>
+<button class="px-6 py-2 bg-primary text-on-primary rounded font-label-md text-label-md uppercase tracking-wider hover:bg-primary/90 shadow-sm transition-all">Re-Scan Resume</button>
+</div>
+</div>
+<!-- Main Score & Metrics Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-stack-lg">
+<!-- Main Score Ring -->
+<div class="lg:col-span-4 bg-surface-container-lowest border border-outline-variant p-10 flex flex-col items-center justify-center relative shadow-sm">
+<div class="relative w-48 h-48 mb-6">
+<svg class="w-full h-full">
+<circle class="text-surface-container-high" cx="96" cy="96" fill="transparent" r="85" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary progress-ring__circle" cx="96" cy="96" fill="transparent" r="85" stroke="currentColor" stroke-dasharray="534" stroke-dashoffset="534" stroke-linecap="butt" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display-lg text-[64px] text-primary">78</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant">ATS SCORE</span>
+</div>
+</div>
+<p class="text-center text-body-md text-on-surface-variant max-w-[260px]">Your resume is performing better than <span class="text-primary font-bold">82%</span> of applicants for Senior Software Engineer roles.</p>
+</div>
+<!-- Metric Cards Grid -->
+<div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-gutter">
+<!-- Keywords -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 flex flex-col justify-between shadow-sm hover:border-primary/40 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono-label text-mono-label text-on-surface-variant">KEYWORDS</span>
+<span class="material-symbols-outlined text-primary">key</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-on-surface block mb-1">64% Match</span>
+<p class="text-body-md text-on-surface-variant">Detected 14 out of 22 critical industry terms found in the target JD.</p>
+</div>
+</div>
+<!-- Impact -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 flex flex-col justify-between shadow-sm hover:border-secondary/40 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono-label text-mono-label text-on-surface-variant">IMPACT</span>
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-on-surface block mb-1">High Strength</span>
+<p class="text-body-md text-on-surface-variant">Strong use of action-oriented verbs and quantifiable metrics detected.</p>
+</div>
+</div>
+<!-- Formatting -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 flex flex-col justify-between shadow-sm hover:border-primary/40 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono-label text-mono-label text-on-surface-variant">FORMATTING</span>
+<span class="material-symbols-outlined text-primary">description</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-on-surface block mb-1">ATS Friendly</span>
+<p class="text-body-md text-on-surface-variant">Standard 1-column layout used. All fonts are fully ATS-readable.</p>
+</div>
+</div>
+<!-- Fundamentals -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 flex flex-col justify-between shadow-sm hover:border-error/40 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono-label text-mono-label text-on-surface-variant">FUNDAMENTALS</span>
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-error block mb-1">Action Required</span>
+<p class="text-body-md text-on-surface-variant">Missing LinkedIn profile URL and GitHub repository links in the header.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Correction Feed & Missing Keywords -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Correction Feed -->
+<div class="lg:col-span-2">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Optimization Suggestions</h3>
+<span class="font-mono-label text-mono-label text-on-surface-variant bg-surface-container px-3 py-1 rounded">8 IMPROVEMENTS FOUND</span>
+</div>
+<div class="space-y-gutter max-h-[700px] overflow-y-auto pr-2 custom-scrollbar">
+<!-- Correction Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant shadow-sm overflow-hidden">
+<div class="bg-surface-container-low px-6 py-3 border-b border-outline-variant flex items-center justify-between">
+<span class="font-label-md text-label-md text-primary uppercase">Experience Section</span>
+<span class="px-3 py-0.5 bg-error-container text-on-error-container text-[11px] font-bold rounded uppercase">Vague Action</span>
+</div>
+<div class="p-6 space-y-6">
+<div class="space-y-2">
+<span class="font-mono-label text-mono-label text-error uppercase text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">remove_circle</span> Current Text</span>
+<div class="diff-removed p-4 font-mono-data text-mono-data text-on-surface-variant italic">
+                                    "Helped develop a React application for the client."
+                                </div>
+</div>
+<div class="space-y-2">
+<span class="font-mono-label text-mono-label text-secondary uppercase text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">add_circle</span> Proposed Optimization</span>
+<div class="diff-added p-4 font-mono-data text-mono-data text-on-surface">
+                                    "Architected and deployed a scalable <span class="bg-secondary/10 text-secondary font-bold px-1">React/Redux</span> dashboard, reducing initial load time by <span class="bg-secondary/10 text-secondary font-bold px-1">40%</span> for 50k+ monthly active users."
+                                </div>
+</div>
+</div>
+</div>
+<!-- Correction Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant shadow-sm overflow-hidden">
+<div class="bg-surface-container-low px-6 py-3 border-b border-outline-variant flex items-center justify-between">
+<span class="font-label-md text-label-md text-primary uppercase">Summary Section</span>
+<span class="px-3 py-0.5 bg-error-container text-on-error-container text-[11px] font-bold rounded uppercase">Missing Skills</span>
+</div>
+<div class="p-6 space-y-6">
+<div class="space-y-2">
+<span class="font-mono-label text-mono-label text-error uppercase text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">remove_circle</span> Current Text</span>
+<div class="diff-removed p-4 font-mono-data text-mono-data text-on-surface-variant italic">
+                                    "Experienced developer looking for a challenging role."
+                                </div>
+</div>
+<div class="space-y-2">
+<span class="font-mono-label text-mono-label text-secondary uppercase text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">add_circle</span> Proposed Optimization</span>
+<div class="diff-added p-4 font-mono-data text-mono-data text-on-surface">
+                                    "Senior Frontend Engineer with 5+ years expertise in <span class="bg-secondary/10 text-secondary font-bold px-1">TypeScript, GraphQL, and System Design</span>. Proven track record of leading distributed teams in fintech environments."
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Panel: Missing Keywords & Quick Stats -->
+<div class="space-y-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant p-6 shadow-sm">
+<h3 class="font-label-md text-label-md text-error uppercase tracking-widest mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">error</span>
+                        Missing Keywords
+                    </h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-container border border-outline-variant text-on-surface font-mono-label text-[11px] rounded">KUBERNETES</span>
+<span class="px-3 py-1 bg-surface-container border border-outline-variant text-on-surface font-mono-label text-[11px] rounded">AWS LAMBDA</span>
+<span class="px-3 py-1 bg-surface-container border border-outline-variant text-on-surface font-mono-label text-[11px] rounded">CI/CD PIPELINES</span>
+<span class="px-3 py-1 bg-surface-container border border-outline-variant text-on-surface font-mono-label text-[11px] rounded">REDIS</span>
+<span class="px-3 py-1 bg-surface-container border border-outline-variant text-on-surface font-mono-label text-[11px] rounded">MICROSERVICES</span>
+<span class="px-3 py-1 bg-surface-container border border-outline-variant text-on-surface font-mono-label text-[11px] rounded">TERRAFORM</span>
+<span class="px-3 py-1 bg-surface-container border border-outline-variant text-on-surface font-mono-label text-[11px] rounded">JEST</span>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant">
+<p class="text-body-md text-on-surface-variant mb-4">These keywords are critical for the role but were not found in your current resume.</p>
+<button class="w-full py-3 bg-surface-container-lowest border border-primary text-primary font-label-md text-label-md uppercase tracking-widest hover:bg-primary/5 transition-all">Generate Summary with Keywords</button>
+</div>
+</div>
+<!-- JD Comparison Chart Placeholder -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 shadow-sm relative overflow-hidden group">
+<div class="relative z-10">
+<h4 class="font-label-md text-label-md text-on-surface uppercase mb-6">Alignment Matrix</h4>
+<div class="h-48 flex flex-col items-center justify-center border-2 border-dashed border-outline-variant rounded bg-surface-container-low/50">
+<span class="material-symbols-outlined text-outline text-4xl mb-2">analytics</span>
+<span class="font-label-md text-label-md text-on-surface-variant text-center px-4">Interactive alignment visualization available in Pro Plan</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-10 border-t border-outline-variant bg-surface-container-lowest mt-16">
+<div class="flex flex-col md:flex-row justify-between items-center px-gutter max-w-container-max mx-auto gap-8">
+<div class="flex items-center gap-4">
+https://lh3.googleusercontent.com/aida/AP1WRLvsK6j7k25S2xVUNR5TzKXNOUVDIo2iS9Sx0XH6DbLMzZKk8hQ8Tnj_F7HjHYhnFSmVzUXJw63aAwYLU5sD12y-AI3vRBKguTiKohdnP8jgHgrjrn7d-alB2fA_qrCoZSTLr0R3eaRy9WUVtaotceQQvrsrVdZjdfghEBR6Ko9CnpPjvKpYZrTciLvLc56NHQ-34zw-Ck4IgvII9T5eRRUVGWqPLmVp9bVYFuu-2S_peuCc9lRTVYCJMA
+<span class="font-mono-label text-mono-label text-on-surface-variant">© 2024 HIREVAULT. Academic Grade Analysis.</span>
+</div>
+<div class="flex gap-8">
+<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for the progress ring
+        window.addEventListener('load', () => {
+            const circle = document.querySelector('.progress-ring__circle');
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            circle.style.strokeDasharray = circumference;
+            const score = 78;
+            const offset = circumference - (score / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        });
+    </script>
+</body></html>

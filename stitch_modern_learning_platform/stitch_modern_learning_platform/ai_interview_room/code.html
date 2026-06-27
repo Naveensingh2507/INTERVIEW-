@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HIREVAULT | Interview Room</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed-variant": "#7c008e",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "bg-deep": "#0a0a0a",
+                      "outline-variant": "#464555",
+                      "error": "#ffb4ab",
+                      "secondary": "#fbabff",
+                      "inverse-primary": "#4d44e3",
+                      "on-surface-variant": "#c7c4d8",
+                      "surface-container-lowest": "#040e1f",
+                      "on-tertiary-container": "#67f4b7",
+                      "surface-container-low": "#111c2d",
+                      "on-surface": "#d8e3fb",
+                      "surface-container-high": "#1f2a3c",
+                      "error-container": "#93000a",
+                      "outline": "#918fa1",
+                      "inverse-on-surface": "#263143",
+                      "on-background": "#d8e3fb",
+                      "secondary-fixed": "#ffd6fd",
+                      "primary": "#c3c0ff",
+                      "primary-fixed-dim": "#c3c0ff",
+                      "surface-dim": "#081425",
+                      "on-secondary": "#580065",
+                      "on-tertiary-fixed": "#002113",
+                      "on-error": "#690005",
+                      "surface-container-highest": "#2a3548",
+                      "on-secondary-container": "#ffd8fd",
+                      "tertiary-fixed": "#6ffbbe",
+                      "background": "#081425",
+                      "tertiary": "#4edea3",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "surface": "#081425",
+                      "on-error-container": "#ffdad6",
+                      "surface-variant": "#2a3548",
+                      "on-tertiary": "#003824",
+                      "tertiary-container": "#006e4b",
+                      "border-slate": "#1e293b",
+                      "surface-container": "#152031",
+                      "on-primary": "#1d00a5",
+                      "on-secondary-fixed": "#36003e",
+                      "on-primary-fixed": "#0f0069",
+                      "text-muted": "#94a3b8",
+                      "primary-fixed": "#e2dfff",
+                      "on-primary-fixed-variant": "#3323cc",
+                      "inverse-surface": "#d8e3fb",
+                      "surface-bright": "#2f3a4c",
+                      "surface-tint": "#c3c0ff",
+                      "secondary-fixed-dim": "#fbabff",
+                      "primary-container": "#4f46e5",
+                      "on-primary-container": "#dad7ff",
+                      "danger-rose": "#f43f5e",
+                      "secondary-container": "#ae05c6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "container-max": "1280px",
+                      "stack-sm": "8px",
+                      "stack-lg": "32px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Inter"],
+                      "display-lg-mobile": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "mono-data": ["JetBrains Mono"],
+                      "body-base": ["Inter"],
+                      "mono-label": ["JetBrains Mono"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "mono-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 2px;
+        }
+        .code-editor-glow:focus {
+            box-shadow: 0 0 15px -5px rgba(195, 192, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-bg-deep text-on-surface font-body-base overflow-hidden selection:bg-primary-container selection:text-white">
+<!-- Header Navigation (Simplified for Interview Focus) -->
+<header class="fixed top-0 w-full z-50 border-b border-slate-800 bg-bg-deep h-16">
+<div class="flex justify-between items-center h-full px-gutter max-w-container-max mx-auto">
+<div class="flex items-center gap-stack-md">
+<span class="font-display-lg text-headline-md tracking-tighter text-primary">HIREVAULT</span>
+<span class="font-mono-label text-mono-label px-2 py-1 bg-surface-container-high rounded-lg text-primary-fixed-dim uppercase">Interview Active</span>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="flex items-center gap-stack-sm font-mono-data text-mono-data text-tertiary">
+<span class="material-symbols-outlined text-base">timer</span>
+<span id="countdown">45:00</span>
+</div>
+<div class="h-6 w-[1px] bg-slate-800"></div>
+<div class="flex gap-stack-md">
+<button class="flex items-center gap-2 px-4 py-2 border border-slate-800 font-mono-label text-mono-label text-on-surface-variant hover:bg-surface-container-low transition-all duration-200 active:scale-95" id="toggleWhiteboard">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+                        TOGGLE WHITEBOARD
+                    </button>
+<button class="bg-danger-rose text-white px-4 py-2 font-mono-label text-mono-label hover:brightness-110 transition-all duration-200 active:scale-95">
+                        END INTERVIEW
+                    </button>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Split Screen -->
+<main class="flex h-screen pt-16 transition-all duration-500 ease-in-out" id="layoutWrapper">
+<!-- Left Panel: Interviewer Waveform -->
+<section class="flex-1 relative flex flex-col items-center justify-center border-r border-slate-800 bg-bg-deep" id="interviewerPanel">
+<!-- Animated Background Glow -->
+<div class="absolute inset-0 pointer-events-none opacity-20">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary blur-[120px] rounded-full mix-blend-screen"></div>
+</div>
+<!-- Waveform Container -->
+<div class="relative z-10 w-full max-w-2xl px-stack-lg text-center">
+<div class="mb-stack-lg">
+
+</div>
+<div class="space-y-stack-sm">
+<h2 class="font-headline-md text-headline-md text-primary-fixed-dim tracking-tight">Interviewer is listening...</h2>
+<p class="font-mono-label text-mono-label text-text-muted uppercase tracking-widest animate-pulse">Transcribing real-time feedback</p>
+</div>
+</div>
+<!-- PIP Webcam Box -->
+<div class="absolute bottom-gutter left-gutter w-48 h-32 rounded-lg border border-slate-800 overflow-hidden bg-surface-container-lowest shadow-2xl">
+<div class="absolute inset-0 flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A POV grainy webcam shot of a computer science student in a dimly lit dorm room, illuminated by the blue light of a screen, wearing noise-canceling headphones, minimalist tech aesthetic, deep dark atmosphere with subtle indigo accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL7xsY-bExNMIvja0TL6XK4yq08siVgQZfj8VEu_zw9Xh9yWdnua31PGwPCe0-iKErLr58DhfClv2xuzPEIxU8LIeb9q5Gf5uTsTEPulzpx73cXylXm2zBVbuFdCPRsZ9Xtajbuq3QJTpVjdDOmP-eRa7y-CpquASSrimsc8ino7z2Jkuwl76SURk6usVkhiw9XZVAeOobnbPmccBDkSxjwVdlWo79XGrzh-E-VF5KM2w18I6KTvAE"/>
+</div>
+<div class="absolute bottom-2 left-2 flex items-center gap-2 bg-black/50 px-2 py-1 rounded backdrop-blur-sm">
+<div class="w-2 h-2 rounded-full bg-danger-rose animate-pulse"></div>
+<span class="font-mono-label text-[10px] text-white">LIVE</span>
+</div>
+</div>
+<!-- AI Status Indicators -->
+<div class="absolute bottom-gutter right-gutter flex gap-stack-md">
+<div class="flex items-center gap-2 bg-surface-container-high/50 border border-slate-800 px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-sm text-tertiary">mic</span>
+<span class="font-mono-label text-[11px] text-on-surface-variant">INPUT: 48kHz</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-high/50 border border-slate-800 px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-sm text-secondary">memory</span>
+<span class="font-mono-label text-[11px] text-on-surface-variant">LLM: O1-PREVIEW</span>
+</div>
+</div>
+</section>
+<!-- Right Panel: Technical Whiteboard -->
+<section class="flex-1 flex flex-col bg-[#0d0d0d] transition-all duration-500 ease-in-out" id="whiteboardPanel">
+<div class="flex items-center justify-between px-6 h-12 bg-surface-container-low border-b border-slate-800">
+<div class="flex gap-stack-md">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+<span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+<span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
+</div>
+<span class="font-mono-label text-mono-label text-text-muted ml-4 uppercase tracking-tighter">solution.py</span>
+</div>
+<div class="flex items-center gap-stack-md">
+<span class="font-mono-label text-[11px] text-text-muted">Ln 1, Col 1</span>
+<span class="font-mono-label text-[11px] text-text-muted">UTF-8</span>
+<button class="text-primary hover:text-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-base">settings</span>
+</button>
+</div>
+</div>
+<div class="flex-1 relative font-mono-data text-mono-data leading-relaxed flex">
+<!-- Line Numbers -->
+<div class="w-12 bg-bg-deep border-r border-slate-800 pt-4 flex flex-col items-center text-slate-600 select-none">
+<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+</div>
+<!-- Textarea Editor -->
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 resize-none p-4 text-on-surface placeholder:text-slate-800 code-editor-glow" placeholder="# Type your technical solution here...
+def optimal_strategy(n, k):
+    # Implement your logic here
+    pass" spellcheck="false"></textarea>
+</div>
+<!-- Editor Action Bar -->
+<div class="p-gutter border-t border-slate-800 bg-bg-deep flex justify-between items-center">
+<div class="flex gap-stack-md">
+<button class="bg-surface-container-high border border-slate-800 text-on-surface-variant px-4 py-2 font-mono-label text-mono-label hover:bg-surface-container-highest transition-all duration-200">
+                        RUN CODE
+                    </button>
+<button class="text-text-muted px-4 py-2 font-mono-label text-mono-label hover:text-on-surface transition-colors">
+                        RESET TEMPLATE
+                    </button>
+</div>
+<div class="text-secondary font-mono-label text-mono-label flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+                    AI AUTOSAVE ACTIVE
+                </div>
+</div>
+</section>
+</main>
+<!-- Footer Overlay (Task Prompt) -->
+<div class="fixed bottom-0 left-0 w-full p-gutter pointer-events-none">
+<div class="max-w-2xl mx-auto bg-surface-container-high/90 backdrop-blur-md border border-slate-800 p-4 rounded-xl shadow-2xl pointer-events-auto">
+<div class="flex gap-stack-md items-start">
+<div class="p-2 bg-secondary/10 rounded-lg">
+<span class="material-symbols-outlined text-secondary">assignment</span>
+</div>
+<div class="space-y-1">
+<span class="font-mono-label text-mono-label text-secondary uppercase">Problem Statement</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+                        Design a system that handles 100k requests per second with less than 50ms latency. Explain your choice of database, caching strategy, and load balancing approach.
+                    </p>
+</div>
+</div>
+</div>
+</div>
+<script>
+        // Toggle Whiteboard Logic
+        const toggleBtn = document.getElementById('toggleWhiteboard');
+        const whiteboard = document.getElementById('whiteboardPanel');
+        const layoutWrapper = document.getElementById('layoutWrapper');
+        let isWhiteboardVisible = true;
+
+        toggleBtn.addEventListener('click', () => {
+            isWhiteboardVisible = !isWhiteboardVisible;
+            if (!isWhiteboardVisible) {
+                whiteboard.style.transform = 'translateX(100%)';
+                whiteboard.style.width = '0%';
+                whiteboard.style.opacity = '0';
+                setTimeout(() => whiteboard.classList.add('hidden'), 500);
+            } else {
+                whiteboard.classList.remove('hidden');
+                setTimeout(() => {
+                    whiteboard.style.transform = 'translateX(0)';
+                    whiteboard.style.width = '50%';
+                    whiteboard.style.opacity = '1';
+                }, 10);
+            }
+        });
+
+        // Countdown Timer Logic
+        let timeLeft = 45 * 60;
+        const countdownEl = document.getElementById('countdown');
+
+        setInterval(() => {
+            if (timeLeft <= 0) return;
+            timeLeft--;
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            countdownEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            
+            if (timeLeft < 300) {
+                countdownEl.classList.add('text-danger-rose');
+            }
+        }, 1000);
+
+        // Simple typing micro-interaction for the editor
+        const textarea = document.querySelector('textarea');
+        textarea.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                textarea.value = textarea.value.substring(0, start) + "    " + textarea.value.substring(end);
+                textarea.selectionStart = textarea.selectionEnd = start + 4;
+            }
+        });
+    </script>
+</body></html>
