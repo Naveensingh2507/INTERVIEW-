@@ -51,7 +51,10 @@ async def evaluate_interview(payload: EvaluateRequest):
                     {"timestamp": "01:00", "event": "Started strong", "severity": "positive"}
                 ],
                 "star_gaps": [],
-                "practice_roadmap": ["Add real API keys for dynamic reports"],
+                "practice_roadmap": [
+                    "Groq API Error: " + str(groq_err),
+                    "Make sure GROQ_API_KEY is set in your Hugging Face Space Secrets"
+                ],
                 "cheating_flags": []
             }
         
