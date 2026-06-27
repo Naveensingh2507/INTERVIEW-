@@ -5,52 +5,67 @@ import useAuth from '../../hooks/useAuth';
 export default function Dashboard() {
   const { user, loading } = useAuth(true);
 
+  // Design Tokens
+  const bg = 'var(--bg)';
+  const textPrimary = 'var(--text-primary)';
+  const textSub = 'var(--text-sub)';
+  const cardBg = 'var(--card-bg)';
+  const cardBorder = 'var(--card-border)';
+  const ghost = 'var(--btn-ghost)';
+  const ghostBorder = 'var(--btn-ghost-border)';
+
   if (loading) {
-    return <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-white">Loading...</div>;
+    return <div style={{ minHeight: '100vh', background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: textPrimary, fontFamily: "'Inter', sans-serif" }}>Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-zinc-200 p-8 pt-24">
-      <div className="max-w-5xl mx-auto">
+    <div style={{ minHeight: '100vh', background: bg, color: textPrimary, padding: '96px 6vw 60px', fontFamily: "'Inter', sans-serif", transition: 'background 0.3s, color 0.3s' }}>
+      <div style={{ maxWidth: 1000, margin: '0 auto' }}>
 
-        <div className="mb-10">
-          <h1 className="text-4xl font-extrabold text-white mb-2">Dashboard</h1>
-          <p className="text-zinc-400">Logged in as <span className="text-zinc-300">{user?.email}</span></p>
+        <div style={{ marginBottom: 48 }}>
+          <h1 style={{ fontSize: 36, fontWeight: 900, letterSpacing: '-0.02em', color: textPrimary, marginBottom: 8 }}>Dashboard</h1>
+          <p style={{ color: textSub, fontSize: 15 }}>Logged in as <span style={{ color: textPrimary, fontWeight: 600 }}>{user?.email}</span></p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: 32 }}>
 
           {/* Recent Resume Audits */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-indigo-500"></div>
+          <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 20, padding: 32 }}>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: textPrimary, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 10px rgba(16,185,129,0.5)' }}></div>
               Recent Resume Audits
             </h2>
-            <div className="flex flex-col gap-3 text-sm">
-              <div className="p-4 bg-zinc-800/50 rounded-xl border border-zinc-700 flex justify-between items-center hover:border-zinc-600 transition-colors">
-                <span className="font-medium text-zinc-200">Frontend Engineer Resume</span>
-                <span className="font-bold text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/20">78 / 100</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ padding: 20, background: ghost, borderRadius: 12, border: `1px solid ${ghostBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
+                   onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(16,185,129,0.4)'}
+                   onMouseLeave={e => e.currentTarget.style.borderColor = ghostBorder}>
+                <span style={{ fontWeight: 600, color: textPrimary, fontSize: 14 }}>Frontend Engineer Resume</span>
+                <span style={{ fontWeight: 700, color: '#10b981', background: 'rgba(16,185,129,0.1)', padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(16,185,129,0.2)', fontSize: 12 }}>78 / 100</span>
               </div>
-              <div className="p-4 bg-zinc-800/50 rounded-xl border border-zinc-700 flex justify-between items-center hover:border-zinc-600 transition-colors">
-                <span className="font-medium text-zinc-200">Fullstack Developer Resume</span>
-                <span className="font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20">82 / 100</span>
+              <div style={{ padding: 20, background: ghost, borderRadius: 12, border: `1px solid ${ghostBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
+                   onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(16,185,129,0.4)'}
+                   onMouseLeave={e => e.currentTarget.style.borderColor = ghostBorder}>
+                <span style={{ fontWeight: 600, color: textPrimary, fontSize: 14 }}>Fullstack Developer Resume</span>
+                <span style={{ fontWeight: 700, color: '#10b981', background: 'rgba(16,185,129,0.1)', padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(16,185,129,0.2)', fontSize: 12 }}>82 / 100</span>
               </div>
             </div>
           </div>
 
           {/* Recent Mock Interviews */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-fuchsia-500"></div>
+          <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 20, padding: 32 }}>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: textPrimary, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#3b82f6', boxShadow: '0 0 10px rgba(59,130,246,0.5)' }}></div>
               Recent Mock Interviews
             </h2>
-            <div className="flex flex-col gap-3 text-sm">
-              <div className="p-4 bg-zinc-800/50 rounded-xl border border-zinc-700 flex justify-between items-center hover:border-zinc-600 transition-colors">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ padding: 20, background: ghost, borderRadius: 12, border: `1px solid ${ghostBorder}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
+                   onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(59,130,246,0.4)'}
+                   onMouseLeave={e => e.currentTarget.style.borderColor = ghostBorder}>
                 <div>
-                  <span className="font-medium text-zinc-200 block">Google — SDE-1</span>
-                  <span className="text-zinc-500 text-xs">DSA &amp; Problem Solving</span>
+                  <span style={{ fontWeight: 600, color: textPrimary, fontSize: 14, display: 'block', marginBottom: 4 }}>Google — SDE-1</span>
+                  <span style={{ color: textSub, fontSize: 12 }}>DSA & Problem Solving</span>
                 </div>
-                <span className="font-bold text-fuchsia-400 bg-fuchsia-500/10 px-3 py-1 rounded-lg border border-fuchsia-500/20">81 / 100</span>
+                <span style={{ fontWeight: 700, color: '#3b82f6', background: 'rgba(59,130,246,0.1)', padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(59,130,246,0.2)', fontSize: 12 }}>81 / 100</span>
               </div>
             </div>
           </div>

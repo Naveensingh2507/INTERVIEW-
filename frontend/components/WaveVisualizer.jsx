@@ -16,18 +16,29 @@ export default function WaveVisualizer({ state, audioLevel = 0 }) {
 
   const renderWave = () => {
     if (state === 'IDLE') {
-      return <div className="w-full h-1 bg-violet-500/50 rounded-full animate-pulse transition-all duration-1000" />;
+      return (
+        <div style={{ width: '100%', height: 4, background: 'rgba(16,185,129,0.3)', borderRadius: 4, position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: 0, left: '-100%', width: '100%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(16,185,129,0.8), transparent)', animation: 'idleSweep 2s infinite linear' }} />
+          <style>{`@keyframes idleSweep { to { left: 100%; } }`}</style>
+        </div>
+      );
     }
     
     if (state === 'LISTENING') {
-      const height = Math.max(4, audioLevel * 150);
+      const height = Math.max(8, audioLevel * 150);
       return (
-        <div className="flex items-center gap-2 h-32">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, height: 128 }}>
           {[1, 2, 3, 4, 5].map((i) => (
             <div 
               key={i} 
-              className="w-3 bg-fuchsia-500 rounded-full transition-all duration-75"
-              style={{ height: `${height * (Math.random() * 0.5 + 0.5)}px` }}
+              style={{
+                width: 12,
+                background: '#10b981',
+                borderRadius: 12,
+                transition: 'height 0.075s',
+                height: `${height * (Math.random() * 0.5 + 0.5)}px`,
+                boxShadow: '0 0 10px rgba(16,185,129,0.4)'
+              }}
             />
           ))}
         </div>
@@ -36,20 +47,42 @@ export default function WaveVisualizer({ state, audioLevel = 0 }) {
 
     if (state === 'THINKING') {
       return (
-        <div className="flex items-center justify-center h-32">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-violet-600 to-fuchsia-600 animate-spin drop-shadow-[0_0_20px_rgba(139,92,246,0.8)] opacity-80" />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 128 }}>
+          <div style={{
+            width: 96,
+            height: 96,
+            borderRadius: '50%',
+            background: 'conic-gradient(from 0deg, transparent, rgba(16,185,129,0.2), #10b981)',
+            animation: 'spin 1.5s linear infinite',
+            filter: 'drop-shadow(0 0 20px rgba(16,185,129,0.5))',
+            opacity: 0.9
+          }} />
+          <div style={{
+            position: 'absolute',
+            width: 80,
+            height: 80,
+            borderRadius: '50%',
+            background: 'var(--card-bg)'
+          }} />
+          <style>{`@keyframes spin { 100% { transform: rotate(360deg); } }`}</style>
         </div>
       );
     }
 
     if (state === 'SPEAKING') {
       return (
-        <div className="flex items-center gap-2 h-32">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, height: 128 }}>
           {[1, 2, 3, 4, 5, 6, 7].map((i) => (
             <div 
               key={i} 
-              className="w-3 bg-gradient-to-t from-violet-400 to-fuchsia-400 rounded-full transition-all duration-100 drop-shadow-[0_0_10px_rgba(217,70,239,0.5)]"
-              style={{ height: `${Math.random() * 100 + 20}px` }}
+              style={{
+                width: 12,
+                background: 'linear-gradient(to top, #059669, #34d399)',
+                borderRadius: 12,
+                transition: 'height 0.1s',
+                height: `${Math.random() * 100 + 20}px`,
+                boxShadow: '0 0 15px rgba(16,185,129,0.6)'
+              }}
             />
           ))}
         </div>
@@ -58,16 +91,17 @@ export default function WaveVisualizer({ state, audioLevel = 0 }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-8">
-      <div className="h-40 flex items-center justify-center w-full mb-8">
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 32, fontFamily: "'Inter', sans-serif" }}>
+      <div style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', marginBottom: 32 }}>
         {renderWave()}
       </div>
-      <p className="text-zinc-400 font-medium tracking-wide animate-pulse">
+      <p style={{ color: 'var(--text-sub)', fontWeight: 600, letterSpacing: '0.05em', animation: 'pulseText 2s infinite' }}>
         {state === 'IDLE' && "Interviewer is idle..."}
         {state === 'LISTENING' && "Interviewer is listening..."}
         {state === 'THINKING' && "Interviewer is thinking..."}
         {state === 'SPEAKING' && "Interviewer is speaking..."}
       </p>
+      <style>{`@keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }`}</style>
     </div>
   );
 }

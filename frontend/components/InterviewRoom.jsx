@@ -176,51 +176,61 @@ export default function InterviewRoom() {
 
   if (isEvaluating) {
     return (
-      <div className="flex h-screen w-full bg-[#0a0a0a] items-center justify-center flex-col text-white relative">
-        <div className="absolute inset-0 bg-violet-600/10 blur-[150px] z-0 pointer-events-none"></div>
-        <div className="w-24 h-24 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mb-6 drop-shadow-[0_0_20px_rgba(139,92,246,0.6)] z-10"></div>
-        <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 animate-pulse z-10">
+      <div style={{ display: 'flex', height: '100vh', width: '100%', background: 'var(--bg)', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', flexDirection: 'column', color: 'var(--text-primary)', position: 'relative' }}>
+        <div style={{ position: 'absolute', inset: 0, background: 'var(--glow-bg)', filter: 'blur(150px)', zIndex: 0, pointerEvents: 'none', opacity: 0.5 }}></div>
+        <div style={{ width: 96, height: 96, border: '4px solid #10b981', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite', marginBottom: 24, filter: 'drop-shadow(0 0 20px rgba(16,185,129,0.6))', zIndex: 10 }}></div>
+        <h2 style={{ fontSize: 32, fontWeight: 900, color: '#10b981', animation: 'pulseText 2s infinite', zIndex: 10 }}>
           Generating your HireReady Report...
         </h2>
-        <p className="text-zinc-400 mt-4 max-w-md text-center z-10">Analyzing your communication, technical accuracy, and non-verbal cues.</p>
+        <p style={{ color: 'var(--text-sub)', marginTop: 16, maxWidth: 450, textAlign: 'center', zIndex: 10 }}>Analyzing your communication, technical accuracy, and non-verbal cues.</p>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } } @keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }`}</style>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen w-full bg-[#0a0a0a] overflow-hidden relative text-white">
-      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-50 bg-zinc-900/80 backdrop-blur border border-zinc-800 px-6 py-2 rounded-full shadow-[0_0_20px_rgba(139,92,246,0.2)]">
-        <span className="font-mono text-xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">{formatTime(timeLeft)}</span>
+    <div style={{ display: 'flex', height: '100vh', width: '100%', background: 'var(--bg)', overflow: 'hidden', position: 'relative', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>
+      
+      {/* Timer */}
+      <div style={{ position: 'absolute', top: 24, left: '50%', transform: 'translateX(-50%)', zIndex: 50, background: 'var(--card-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--card-border)', padding: '8px 24px', borderRadius: 999, boxShadow: '0 0 20px rgba(16,185,129,0.2)' }}>
+        <span style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 800, letterSpacing: '0.1em', color: '#10b981' }}>{formatTime(timeLeft)}</span>
       </div>
 
-      <div className="absolute bottom-6 left-6 z-50 w-48 h-36 bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800/80 shadow-2xl">
-        <video ref={videoRef} autoPlay muted playsInline className="w-full h-full object-cover transform scale-x-[-1]" />
-        <div className="absolute bottom-2 left-2 flex items-center gap-2 bg-black/50 px-2 py-1 rounded">
-          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-          <span className="text-[10px] uppercase font-bold text-white drop-shadow-md">Monitoring Active</span>
+      {/* Webcam mini feed */}
+      <div style={{ position: 'absolute', bottom: 24, left: 24, zIndex: 50, width: 192, height: 144, background: 'var(--card-bg)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--card-border)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
+        <video ref={videoRef} autoPlay muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scaleX(-1)' }} />
+        <div style={{ position: 'absolute', bottom: 8, left: 8, display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(0,0,0,0.6)', padding: '4px 8px', borderRadius: 4 }}>
+          <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981', animation: 'pulse 2s infinite' }}></div>
+          <span style={{ fontSize: 10, textTransform: 'uppercase', fontWeight: 800, color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>Monitoring Active</span>
         </div>
       </div>
+      <style>{`@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }`}</style>
       
+      {/* End Button */}
       <button 
         onClick={endInterview}
-        className="absolute bottom-6 right-6 z-50 px-6 py-3 bg-red-500/10 text-red-500 border border-red-500/20 rounded-full font-bold hover:bg-red-500 hover:text-white transition-colors cursor-pointer"
+        style={{ position: 'absolute', bottom: 24, right: 24, zIndex: 50, padding: '12px 24px', background: 'rgba(239,68,68,0.1)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 999, fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
+        onMouseEnter={e => { e.currentTarget.style.background = '#ef4444'; e.currentTarget.style.color = '#fff'; }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(239,68,68,0.1)'; e.currentTarget.style.color = '#ef4444'; }}
       >
         End Interview
       </button>
 
-      <div className="flex w-full h-full">
-        <div className={`flex flex-col items-center justify-center h-full transition-all duration-500 relative ${isCodingActive ? 'w-1/2 border-r border-zinc-800' : 'w-full'}`}>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-600 rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
+      <div style={{ display: 'flex', width: '100%', height: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', height: '100%', transition: 'width 0.5s', position: 'relative', width: isCodingActive ? '50%' : '100%', borderRight: isCodingActive ? '1px solid var(--card-border)' : 'none' }}>
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 384, height: 384, background: 'var(--glow-bg)', borderRadius: '50%', filter: 'blur(150px)', opacity: 0.6, pointerEvents: 'none' }}></div>
           
-          <div className="relative z-10 w-full flex flex-col items-center">
+          <div style={{ position: 'relative', zIndex: 10, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <WaveVisualizer state={waveState} audioLevel={audioLevel} />
             
             {!isCodingActive && (
               <button 
                 onClick={() => setIsCodingActive(true)}
-                className="mt-12 px-6 py-3 bg-zinc-900/80 border border-zinc-800 rounded-full hover:bg-zinc-800 hover:border-fuchsia-500/50 transition-all shadow-lg flex items-center gap-2 text-sm text-zinc-300"
+                style={{ marginTop: 48, padding: '12px 24px', background: 'var(--card-bg)', border: '1px solid var(--card-border)', borderRadius: 999, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, color: 'var(--text-sub)', transition: 'all 0.2s', boxShadow: '0 10px 20px rgba(0,0,0,0.2)', fontFamily: "'Inter', sans-serif" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(16,185,129,0.5)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--card-border)'; e.currentTarget.style.color = 'var(--text-sub)'; }}
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                 </svg>
                 Open Technical Whiteboard
@@ -230,16 +240,19 @@ export default function InterviewRoom() {
         </div>
 
         {isCodingActive && (
-          <div className="w-1/2 h-full animate-in slide-in-from-right duration-500 relative bg-zinc-950">
+          <div style={{ width: '50%', height: '100%', position: 'relative', background: 'var(--bg)', animation: 'slideInRight 0.5s ease-out' }}>
             <button 
               onClick={() => setIsCodingActive(false)}
-              className="absolute top-4 right-4 z-10 p-2 bg-zinc-800 rounded-md hover:bg-red-500/20 hover:text-red-400 text-zinc-400 transition-colors"
+              style={{ position: 'absolute', top: 16, right: 16, zIndex: 10, padding: 8, background: 'var(--card-bg)', border: '1px solid var(--card-border)', borderRadius: 8, color: 'var(--text-sub)', cursor: 'pointer', transition: 'all 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(239,68,68,0.1)'; e.currentTarget.style.color = '#ef4444'; e.currentTarget.style.borderColor = 'rgba(239,68,68,0.2)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'var(--card-bg)'; e.currentTarget.style.color = 'var(--text-sub)'; e.currentTarget.style.borderColor = 'var(--card-border)'; }}
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
             <WhiteboardEditor code={code} setCode={setCode} />
+            <style>{`@keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`}</style>
           </div>
         )}
       </div>

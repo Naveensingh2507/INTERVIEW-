@@ -10,38 +10,57 @@ export default function CorrectionCard({ correction }) {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const cardBg = 'var(--card-bg)';
+  const cardBorder = 'var(--card-border)';
+  const textPrimary = 'var(--text-primary)';
+  const textSub = 'var(--text-sub)';
+  
   return (
-    <div className="flex flex-col bg-[#111] rounded-xl overflow-hidden border border-zinc-800/50 mb-6 shadow-sm">
-      <div className="p-5 border-l-4 border-red-500/80 bg-red-500/5 flex flex-col gap-2">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="px-2 py-0.5 rounded text-[10px] uppercase tracking-wider font-bold bg-red-500/20 text-red-400">Issue</span>
-          <span className="text-sm font-medium text-zinc-300">{correction.issue}</span>
+    <div style={{ display: 'flex', flexDirection: 'column', background: cardBg, borderRadius: 16, overflow: 'hidden', border: `1px solid ${cardBorder}`, fontFamily: "'Inter', sans-serif" }}>
+      
+      {/* Issue Section */}
+      <div style={{ padding: 20, borderLeft: '4px solid #ef4444', background: 'rgba(239,68,68,0.03)', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800, background: 'rgba(239,68,68,0.15)', color: '#ef4444' }}>
+            Issue
+          </span>
+          <span style={{ fontSize: 14, fontWeight: 600, color: textPrimary }}>{correction.issue}</span>
         </div>
-        <p className="text-zinc-400 font-mono text-sm pl-1 line-through opacity-70">"{correction.original_line}"</p>
+        <p style={{ color: textSub, fontFamily: 'monospace', fontSize: 13, textDecoration: 'line-through', opacity: 0.8, marginLeft: 2, wordBreak: 'break-word' }}>
+          "{correction.original_line}"
+        </p>
       </div>
       
-      <div className="p-5 border-l-4 border-emerald-500/80 bg-emerald-500/5 flex flex-col gap-2 relative group">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="px-2 py-0.5 rounded text-[10px] uppercase tracking-wider font-bold bg-emerald-500/20 text-emerald-400">Suggested Fix</span>
+      {/* Suggested Fix Section */}
+      <div style={{ padding: 20, borderLeft: '4px solid #10b981', background: 'rgba(16,185,129,0.03)', display: 'flex', flexDirection: 'column', gap: 12, position: 'relative' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800, background: 'rgba(16,185,129,0.15)', color: '#10b981' }}>
+            Suggested Fix
+          </span>
         </div>
-        <p className="text-zinc-200 text-sm pl-1 leading-relaxed">"{correction.suggested_fix}"</p>
+        <p style={{ color: textPrimary, fontSize: 14, lineHeight: 1.6, marginLeft: 2, paddingRight: 40, wordBreak: 'break-word' }}>
+          "{correction.suggested_fix}"
+        </p>
         
         <button 
           onClick={handleCopy}
-          className="absolute top-4 right-4 p-2 rounded-md bg-zinc-800 text-zinc-400 opacity-0 group-hover:opacity-100 transition-opacity hover:text-white hover:bg-zinc-700"
+          style={{ position: 'absolute', top: 20, right: 20, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, background: 'var(--btn-ghost)', border: `1px solid var(--btn-ghost-border)`, color: copied ? '#10b981' : textSub, cursor: 'pointer', transition: 'all 0.2s' }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'var(--btn-ghost-hover)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'var(--btn-ghost)'; }}
           title="Copy to clipboard"
         >
           {copied ? (
-            <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           ) : (
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
             </svg>
           )}
         </button>
       </div>
+
     </div>
   );
 }

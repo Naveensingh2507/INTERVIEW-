@@ -23,20 +23,31 @@ export default function AuditResultsPage() {
     }
   }, [router]);
 
+  // Design tokens
+  const bg = 'var(--bg)';
+  const textPrimary = 'var(--text-primary)';
+  const textSub = 'var(--text-sub)';
+  const cardBg = 'var(--card-bg)';
+  const cardBorder = 'var(--card-border)';
+  const ghost = 'var(--btn-ghost)';
+  const ghostBorder = 'var(--btn-ghost-border)';
+
   if (!results) return null;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-zinc-200 p-8 pb-24 flex flex-col items-center">
-      <div className="w-full max-w-4xl mt-8">
+    <div style={{ minHeight: '100vh', background: bg, color: textPrimary, padding: '96px 6vw 60px', fontFamily: "'Inter', sans-serif", transition: 'background 0.3s, color 0.3s' }}>
+      <div style={{ maxWidth: 900, margin: '0 auto' }}>
         
-        <div className="flex items-center justify-between mb-12">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 48, flexWrap: 'wrap', gap: 20 }}>
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">Audit Results</h1>
-            <p className="text-zinc-400 text-sm">Review your ATS compatibility and line-by-line feedback.</p>
+            <h1 style={{ fontSize: 32, fontWeight: 900, letterSpacing: '-0.02em', color: textPrimary, marginBottom: 8 }}>Audit Results</h1>
+            <p style={{ fontSize: 14, color: textSub }}>Review your ATS compatibility and line-by-line feedback.</p>
           </div>
           <button 
             onClick={() => router.push('/audit')}
-            className="px-4 py-2 text-sm font-medium text-zinc-300 bg-zinc-900 border border-zinc-800 rounded-lg hover:bg-zinc-800 transition-colors"
+            style={{ padding: '10px 20px', fontSize: 14, fontWeight: 600, background: ghost, border: `1px solid ${ghostBorder}`, borderRadius: 8, color: textPrimary, cursor: 'pointer', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--btn-ghost-hover)'; e.currentTarget.style.borderColor = 'var(--btn-ghost-border-hover)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = ghost; e.currentTarget.style.borderColor = ghostBorder; }}
           >
             Audit Another Resume
           </button>
@@ -45,11 +56,11 @@ export default function AuditResultsPage() {
         <ATSScoreDashboard score={results.ats_score} breakdown={results.score_breakdown} />
 
         {results.missing_keywords && results.missing_keywords.length > 0 && (
-          <div className="mb-12">
-            <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-4">Missing Keywords</h2>
-            <div className="flex flex-wrap gap-2">
+          <div style={{ marginBottom: 48 }}>
+            <h2 style={{ fontSize: 13, fontWeight: 700, color: textSub, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>Missing Keywords</h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
               {results.missing_keywords.map((kw, i) => (
-                <span key={i} className="px-3 py-1 bg-red-500/10 border border-red-500/20 text-red-400 rounded-full text-sm">
+                <span key={i} style={{ padding: '4px 12px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', borderRadius: 100, fontSize: 13, fontWeight: 600 }}>
                   {kw}
                 </span>
               ))}
@@ -58,16 +69,16 @@ export default function AuditResultsPage() {
         )}
 
         <div>
-          <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-6">Line-by-Line Corrections</h2>
+          <h2 style={{ fontSize: 13, fontWeight: 700, color: textSub, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 24 }}>Line-by-Line Corrections</h2>
           {results.corrections && results.corrections.length > 0 ? (
-            <div className="flex flex-col">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
               {results.corrections.map((corr, idx) => (
                 <CorrectionCard key={idx} correction={corr} />
               ))}
             </div>
           ) : (
-            <div className="p-8 text-center bg-zinc-900 border border-zinc-800 rounded-xl">
-              <p className="text-zinc-400">Great job! No major corrections found.</p>
+            <div style={{ padding: 32, textAlign: 'center', background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 16 }}>
+              <p style={{ color: textSub, fontWeight: 500 }}>Great job! No major corrections found.</p>
             </div>
           )}
         </div>

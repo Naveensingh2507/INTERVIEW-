@@ -2,14 +2,19 @@
 import React from 'react';
 
 export default function WhiteboardEditor({ code, setCode }) {
+  const cardBg = 'var(--card-bg)';
+  const cardBorder = 'var(--card-border)';
+  const textPrimary = 'var(--text-primary)';
+  const textSub = 'var(--text-sub)';
+
   return (
-    <div className="flex flex-col h-full bg-zinc-950 border-l border-zinc-800">
-      <div className="px-6 py-4 border-b border-zinc-800 bg-zinc-900/50">
-        <h2 className="text-lg font-bold text-white tracking-wide">Technical Whiteboard</h2>
-        <p className="text-xs text-zinc-500">Type your code or pseudocode here</p>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'var(--bg)', borderLeft: `1px solid ${cardBorder}` }}>
+      <div style={{ padding: '16px 24px', borderBottom: `1px solid ${cardBorder}`, background: cardBg }}>
+        <h2 style={{ fontSize: 18, fontWeight: 800, color: textPrimary, letterSpacing: '0.02em', marginBottom: 4 }}>Technical Whiteboard</h2>
+        <p style={{ fontSize: 12, color: textSub }}>Type your code or pseudocode here</p>
       </div>
       <textarea
-        className="flex-1 w-full p-6 bg-transparent text-zinc-300 font-mono text-sm leading-relaxed focus:outline-none resize-none"
+        style={{ flex: 1, width: '100%', padding: 24, background: 'transparent', color: textPrimary, fontFamily: 'monospace', fontSize: 14, lineHeight: 1.6, border: 'none', outline: 'none', resize: 'none' }}
         placeholder="// Start typing your solution..."
         value={code}
         onChange={(e) => setCode(e.target.value)}
