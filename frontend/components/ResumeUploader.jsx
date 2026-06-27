@@ -9,6 +9,9 @@ export default function ResumeUploader({ file, setFile }) {
   const textMuted = 'var(--text-muted)';
   const tagBg = 'var(--pill-inactive)';
   const tagBorder = 'var(--pill-border)';
+  const cardBgHover = 'var(--bg)';
+  const cardBorderHover = 'rgba(16,185,129,0.4)';
+  const iconBg = 'rgba(16,185,129,0.06)';
 
   const handleDrop = useCallback((e) => {
     e.preventDefault();
