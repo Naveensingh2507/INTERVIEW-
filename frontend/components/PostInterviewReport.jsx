@@ -1,10 +1,12 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function PostInterviewReport() {
   const [report, setReport] = useState(null);
   const router = useRouter();
+  const { dark } = useTheme();
 
   useEffect(() => {
     const saved = sessionStorage.getItem('interviewReport');
@@ -13,27 +15,43 @@ export default function PostInterviewReport() {
     }
   }, []);
 
+  // CSS variables for styling
+  const bg = 'var(--bg)';
+  const cardBg = 'var(--card-bg)';
+  const cardBorder = 'var(--card-border)';
+  const textPrimary = 'var(--text-primary)';
+  const textSub = 'var(--text-sub)';
+  const textMuted = 'var(--text-muted)';
+  const ghost = 'var(--btn-ghost)';
+  const ghostBorder = 'var(--btn-ghost-border)';
+
   if (!report) {
-    return <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-white">Loading report...</div>;
+    return <div style={{ minHeight: '100vh', background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: textPrimary, fontFamily: "'Inter', sans-serif" }}>Loading report...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-zinc-200 p-8 pt-20">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-12">
-          <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 drop-shadow-md">
-            Your HireReady Report
+    <div style={{ minHeight: '100vh', background: bg, color: textPrimary, padding: '96px 6vw 60px', fontFamily: "'Inter', sans-serif", transition: 'background 0.3s, color 0.3s' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20, marginBottom: 48 }}>
+          <h1 style={{ fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 900, letterSpacing: '-0.03em', color: textPrimary }}>
+            Your <span style={{ color: '#10b981' }}>HireReady Report</span>
           </h1>
-          <div className="flex gap-4 print:hidden">
+          <div style={{ display: 'flex', gap: 16 }}>
             <button 
               onClick={() => window.print()} 
-              className="px-6 py-2 bg-zinc-800 border border-zinc-700 rounded-lg hover:bg-zinc-700 transition-colors text-sm font-bold"
+              style={{ padding: '12px 24px', background: ghost, border: `1px solid ${ghostBorder}`, borderRadius: 10, color: textPrimary, fontSize: 14, fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
             >
               Download Report
             </button>
             <button 
               onClick={() => router.push('/interview/setup')} 
-              className="px-6 py-2 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-lg hover:opacity-90 transition-opacity text-sm font-bold shadow-[0_0_15px_rgba(139,92,246,0.3)]"
+              style={{ padding: '12px 28px', background: '#10b981', color: '#fff', border: 'none', borderRadius: 10, fontSize: 14, fontWeight: 700, cursor: 'pointer', boxShadow: '0 0 24px rgba(16,185,129,0.3)', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 0 36px rgba(16,185,129,0.5)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = '#10b981'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(16,185,129,0.3)'; }}
             >
               Practice Again
             </button>
@@ -41,17 +59,22 @@ export default function PostInterviewReport() {
         </div>
 
         {/* Section 1: Score Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 24, marginBottom: 48 }}>
           {[
             { label: 'Technical Accuracy', val: report.scores?.technical_accuracy || 0 },
             { label: 'Communication', val: report.scores?.communication_structure || 0 },
             { label: 'Confidence', val: report.scores?.confidence_delivery || 0 },
             { label: 'Overall Score', val: report.scores?.overall || 0, highlight: true }
           ].map((score, i) => (
-            <div key={i} className={`p-6 rounded-2xl border ${score.highlight ? 'bg-violet-900/20 border-violet-500/50 relative overflow-hidden group' : 'bg-zinc-900/50 border-zinc-800 hover:border-violet-500/30 transition-colors'}`}>
-              {score.highlight && <div className="absolute inset-0 bg-gradient-to-tr from-violet-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>}
-              <div className="text-sm text-zinc-400 mb-2 relative z-10">{score.label}</div>
-              <div className={`text-5xl font-bold relative z-10 ${score.highlight ? 'text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 drop-shadow-md' : 'text-white'}`}>
+            <div key={i} style={{ 
+              padding: 24, borderRadius: 16, background: score.highlight ? 'rgba(16,185,129,0.08)' : cardBg, 
+              border: `1px solid ${score.highlight ? 'rgba(16,185,129,0.25)' : cardBorder}`, 
+              position: 'relative', overflow: 'hidden', transition: 'border-color 0.2s, transform 0.2s' 
+            }}>
+              <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: score.highlight ? '#10b981' : textMuted, marginBottom: 12 }}>
+                {score.label}
+              </div>
+              <div style={{ fontSize: 42, fontWeight: 900, color: score.highlight ? '#10b981' : textPrimary, letterSpacing: '-0.02em' }}>
                 {score.val}
               </div>
             </div>
@@ -60,23 +83,20 @@ export default function PostInterviewReport() {
 
         {/* Section 2: Behavioral Timeline */}
         {report.behavioral_timeline && report.behavioral_timeline.length > 0 && (
-          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 mb-12 hover:border-violet-500/30 transition-colors">
-            <h2 className="text-xl font-bold text-white mb-6">Behavioral Timeline</h2>
-            <div className="relative w-full h-4 bg-zinc-800 rounded-full my-8">
+          <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 20, padding: 32, marginBottom: 48 }}>
+            <h2 style={{ fontSize: 20, fontWeight: 800, color: textPrimary, marginBottom: 24 }}>Behavioral Timeline</h2>
+            <div style={{ position: 'relative', width: '100%', height: 6, background: ghost, borderRadius: 99, margin: '40px 0' }}>
               {report.behavioral_timeline?.map((event, i) => {
                 const parts = event.timestamp.split(':');
-                const m = parseInt(parts[0]) || 0;
-                const s = parseInt(parts[1]) || 0;
-                const totalSecs = (m * 60) + s;
-                // Scale assuming 1800s (30 mins) max duration for timeline distribution
+                const totalSecs = (parseInt(parts[0]) * 60) + parseInt(parts[1]);
                 const pct = Math.min((totalSecs / 1800) * 100, 100);
-                const color = event.severity === 'warning' ? 'bg-red-500' : 'bg-emerald-500';
+                const color = event.severity === 'warning' ? '#ef4444' : '#10b981';
                 
                 return (
-                  <div key={i} className="absolute top-1/2 -translate-y-1/2 group" style={{ left: `${pct}%` }}>
-                    <div className={`w-4 h-4 rounded-full border-2 border-zinc-900 cursor-pointer ${color} hover:scale-150 transition-transform`}></div>
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 bg-zinc-800 border border-zinc-700 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 text-xs">
-                      <span className="font-mono text-violet-400 block mb-1">{event.timestamp}</span>
+                  <div key={i} style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', left: `${pct}%`, cursor: 'pointer' }}>
+                    <div style={{ width: 14, height: 14, borderRadius: '50%', background: color, border: `2px solid ${cardBg}`, transition: 'transform 0.2s' }} />
+                    <div style={{ position: 'absolute', bottom: 24, left: '50%', transform: 'translateX(-50%)', width: 220, padding: 12, background: 'var(--nav-bg)', border: `1px solid ${cardBorder}`, borderRadius: 10, fontSize: 13, color: textSub, boxShadow: '0 10px 30px rgba(0,0,0,0.2)', opacity: 0, pointerEvents: 'none', transition: 'opacity 0.2s' }}>
+                      <span style={{ fontFamily: 'monospace', color: color, fontWeight: 700, display: 'block', marginBottom: 4 }}>{event.timestamp}</span>
                       {event.event}
                     </div>
                   </div>
@@ -87,24 +107,22 @@ export default function PostInterviewReport() {
         )}
 
         {/* Section 3 & 4 Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 32, marginBottom: 48 }}>
           
           {/* STAR Gaps */}
-          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 hover:border-violet-500/30 transition-colors">
-            <h2 className="text-xl font-bold text-white mb-6">STAR Framework Gaps</h2>
+          <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 20, padding: 32 }}>
+            <h2 style={{ fontSize: 20, fontWeight: 800, color: textPrimary, marginBottom: 24 }}>STAR Framework Gaps</h2>
             {!report.star_gaps || report.star_gaps.length === 0 ? (
-              <p className="text-zinc-500">Perfect STAR answers detected. Great job!</p>
+              <p style={{ color: '#10b981', fontWeight: 600 }}>Perfect STAR answers detected. Great job!</p>
             ) : (
-              <div className="flex flex-col gap-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 {report.star_gaps?.map((gap, i) => (
-                  <div key={i} className="p-4 bg-zinc-950 rounded-xl border border-zinc-800">
-                    <p className="text-sm font-medium text-zinc-300 mb-2">Q: "{gap.question}"</p>
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="px-2 py-1 bg-violet-500/20 text-violet-400 rounded text-xs font-bold border border-violet-500/30">
-                        Missing: {gap.missing_component}
-                      </span>
+                  <div key={i} style={{ padding: 20, background: ghost, border: `1px solid ${ghostBorder}`, borderRadius: 12 }}>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: textPrimary, marginBottom: 12 }}>Q: "{gap.question}"</p>
+                    <div style={{ display: 'inline-block', padding: '4px 10px', background: 'rgba(239,68,68,0.1)', color: '#ef4444', borderRadius: 6, fontSize: 12, fontWeight: 700, border: '1px solid rgba(239,68,68,0.2)', marginBottom: 10 }}>
+                      Missing: {gap.missing_component}
                     </div>
-                    <p className="text-sm text-zinc-400">{gap.feedback}</p>
+                    <p style={{ fontSize: 14, color: textSub, lineHeight: 1.6 }}>{gap.feedback}</p>
                   </div>
                 ))}
               </div>
@@ -112,41 +130,21 @@ export default function PostInterviewReport() {
           </div>
 
           {/* Practice Roadmap */}
-          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 hover:border-violet-500/30 transition-colors">
-            <h2 className="text-xl font-bold text-white mb-6">Actionable Practice Roadmap</h2>
-            <ul className="flex flex-col gap-4">
+          <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 20, padding: 32 }}>
+            <h2 style={{ fontSize: 20, fontWeight: 800, color: textPrimary, marginBottom: 24 }}>Actionable Practice Roadmap</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {report.practice_roadmap?.map((step, i) => (
-                <li key={i} className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-violet-600/20 text-violet-400 flex items-center justify-center font-bold border border-violet-500/30 shrink-0">
+                <div key={i} style={{ display: 'flex', gap: 16 }}>
+                  <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(16,185,129,0.1)', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, border: '1px solid rgba(16,185,129,0.2)', flexShrink: 0 }}>
                     {i + 1}
                   </div>
-                  <p className="text-zinc-300 pt-1">{step}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-        </div>
-
-        {/* Section 5: Cheating Flags */}
-        {report.cheating_flags && report.cheating_flags.length > 0 && (
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-8 mb-12">
-            <h2 className="text-xl font-bold text-amber-500 mb-6 flex items-center gap-2">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              Proctoring Flags Detected
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {report.cheating_flags.map((flag, i) => (
-                <div key={i} className="p-4 bg-zinc-950/50 rounded-xl border border-amber-500/20 flex flex-col gap-1">
-                  <span className="font-mono text-amber-400 text-sm">{flag.timestamp} — {flag.type.replace('_', ' ')}</span>
-                  <span className="text-zinc-400 text-sm">{flag.note}</span>
+                  <p style={{ fontSize: 15, color: textSub, paddingTop: 6, lineHeight: 1.6 }}>{step}</p>
                 </div>
               ))}
             </div>
           </div>
-        )}
+        </div>
+
       </div>
     </div>
   );

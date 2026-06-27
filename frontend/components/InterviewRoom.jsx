@@ -55,7 +55,9 @@ export default function InterviewRoom() {
     mpRef.current.initialize(videoRef.current);
     mpRef.current.startTracking();
 
-    wsRef.current = new WebSocket(`ws://localhost:8000/ws/interview`);
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const wsUrl = API_URL.replace('http://', 'ws://').replace('https://', 'wss://');
+    wsRef.current = new WebSocket(`${wsUrl}/ws/interview`);
     wsRef.current.onopen = () => {
       const timeLimitMinutes = parseInt(config.timeLimit?.split(' ')[0]) || 45;
       const enrichedConfig = {
