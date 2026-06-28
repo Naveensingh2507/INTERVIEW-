@@ -17,9 +17,14 @@ class EvaluateRequest(BaseModel):
 @router.post("/api/evaluate")
 async def evaluate_interview(payload: EvaluateRequest):
     try:
+        compressed_vision = [log for log in payload.vision_log if not log.get("eye_contact", True) or log.get("reading_detected", False)][:50]
+        
         bundled_data = json.dumps({
             "transcript": payload.full_transcript,
-            "vision_log": payload.vision_log,
+            "vision_log_summary": {
+                "total_frames": len(payload.vision_log),
+                "notable_events": compressed_vision
+            },
             "meta": payload.session_meta,
             "questions_asked": payload.questions_asked
         }, indent=2)
