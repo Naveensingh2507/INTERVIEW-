@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from '../context/ThemeContext';
+import useAuth from '../hooks/useAuth';
 
 function SunIcon() {
   return (
@@ -24,6 +25,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { dark, toggle } = useTheme();
+  const { user } = useAuth(false);
 
   // Landing page has its own built-in navbar
   if (pathname === '/') return null;
@@ -75,13 +77,23 @@ export default function Navbar() {
           {dark ? <SunIcon /> : <MoonIcon />}
         </button>
 
-        <Link href="/login" style={{ color: 'var(--text-sub)', fontSize: 15, fontWeight: 500, textDecoration: 'none' }}>Sign In</Link>
-
-        <button onClick={() => router.push('/interview/setup')}
-          style={{ padding: '8px 20px', background: '#10b981', color: '#fff', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#10b981'; e.currentTarget.style.transform = 'translateY(0)'; }}
-        >Get Started</button>
+        {user ? (
+          <Link href="/profile" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', background: 'var(--card-bg)', border: '1px solid var(--card-border)', padding: '6px 16px 6px 6px', borderRadius: 100, transition: 'all 0.2s' }}>
+            <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#10b981', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800 }}>
+              {user.email ? user.email.charAt(0).toUpperCase() : 'U'}
+            </div>
+            <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>Profile</span>
+          </Link>
+        ) : (
+          <>
+            <Link href="/login" style={{ color: 'var(--text-sub)', fontSize: 15, fontWeight: 500, textDecoration: 'none' }}>Sign In</Link>
+            <button onClick={() => router.push('/interview/setup')}
+              style={{ padding: '8px 20px', background: '#10b981', color: '#fff', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = '#10b981'; e.currentTarget.style.transform = 'translateY(0)'; }}
+            >Get Started</button>
+          </>
+        )}
       </div>
     </nav>
   );
