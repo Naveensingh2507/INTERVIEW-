@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '../context/ThemeContext';
+import useAuth from '../hooks/useAuth';
 
 const TYPING_WORDS = ['Software Engineer', 'Product Manager', 'Data Analyst', 'Frontend Dev', 'ML Engineer'];
 
@@ -68,6 +69,7 @@ function MoonIcon() {
 export default function HomePage() {
   const router = useRouter();
   const { dark, toggle } = useTheme();
+  const { user } = useAuth(false);
   const [typedText, setTypedText] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -163,12 +165,24 @@ export default function HomePage() {
           >
             {dark ? <SunIcon /> : <MoonIcon />}
           </button>
-          <button onClick={() => router.push('/login')} style={{ background: 'none', border: 'none', color: C.sub, fontSize: 15, fontWeight: 500, cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>Sign In</button>
-          <button onClick={() => router.push('/audit')}
-            style={{ padding: '10px 24px', background: '#10b981', color: '#fff', border: 'none', borderRadius: 9, fontSize: 15, fontWeight: 700, cursor: 'pointer', boxShadow: '0 0 24px rgba(16,185,129,0.3)', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
-            onMouseEnter={e => { e.target.style.background = '#059669'; e.target.style.transform = 'translateY(-1px)'; }}
-            onMouseLeave={e => { e.target.style.background = '#10b981'; e.target.style.transform = 'translateY(0)'; }}
-          >Get Started</button>
+          
+          {user ? (
+            <button onClick={() => router.push('/profile')} style={{ display: 'flex', alignItems: 'center', gap: 10, border: 'none', background: C.card, border: `1px solid ${C.border}`, padding: '6px 16px 6px 6px', borderRadius: 100, cursor: 'pointer', transition: 'all 0.2s' }}>
+              <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#10b981', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800 }}>
+                {user.email ? user.email.charAt(0).toUpperCase() : 'U'}
+              </div>
+              <span style={{ fontSize: 14, fontWeight: 600, color: C.text, fontFamily: "'Inter', sans-serif" }}>Profile</span>
+            </button>
+          ) : (
+            <>
+              <button onClick={() => router.push('/login')} style={{ background: 'none', border: 'none', color: C.sub, fontSize: 15, fontWeight: 500, cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>Sign In</button>
+              <button onClick={() => router.push('/login')}
+                style={{ padding: '10px 24px', background: '#10b981', color: '#fff', border: 'none', borderRadius: 9, fontSize: 15, fontWeight: 700, cursor: 'pointer', boxShadow: '0 0 24px rgba(16,185,129,0.3)', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
+                onMouseEnter={e => { e.target.style.background = '#059669'; e.target.style.transform = 'translateY(-1px)'; }}
+                onMouseLeave={e => { e.target.style.background = '#10b981'; e.target.style.transform = 'translateY(0)'; }}
+              >Get Started</button>
+            </>
+          )}
         </div>
       </nav>
 
@@ -202,13 +216,13 @@ export default function HomePage() {
           </p>
 
           <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 40 }}>
-            <button onClick={() => router.push('/interview/setup')}
+            <button onClick={() => router.push(user ? '/dashboard' : '/login')}
               style={{ padding: '16px 32px', background: '#10b981', color: '#fff', border: 'none', borderRadius: 12, fontSize: 17, fontWeight: 800, cursor: 'pointer', boxShadow: '0 0 40px rgba(16,185,129,0.4)', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
               onMouseEnter={e => { e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 50px rgba(16,185,129,0.55)'; }}
               onMouseLeave={e => { e.currentTarget.style.background = '#10b981'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(16,185,129,0.4)'; }}
             >Start Free AI Interview</button>
 
-            <button onClick={() => router.push('/audit')}
+            <button onClick={() => router.push(user ? '/audit' : '/login')}
               style={{ padding: '16px 28px', background: C.ghost, color: C.text, border: `1px solid ${C.ghostBorder}`, borderRadius: 12, fontSize: 17, fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
