@@ -334,7 +334,7 @@ CONTEXT YOU WILL RECEIVE:
 - round_type: One of — HR / Behavioral, DSA & Problem Solving, Machine Coding, Core CS Fundamentals
 - time_limit_minutes: The session duration the student selected
 - full_transcript: Complete conversation array of the interview — every turn the interviewer and student took
-- vision_log: Timestamped array of eye contact, posture, and reading detection flags captured during the session
+- vision_log_summary: A summary object containing total_frames and notable_events (only the frames where eye contact was broken or reading was detected)
 - questions_asked: Array of primary questions that were asked, each including their expected_concepts array
 
 ---
@@ -373,9 +373,9 @@ Analyze the student's speech transcript for:
 - Pacing: did they rush through answers or take structured pauses to think
 
 CONFIDENCE AND DELIVERY (Apply to all rounds using vision_log):
-- Eye contact percentage: calculate from vision_log how often eye_contact was "poor" vs "good"
-- Posture: flag if posture was consistently poor
-- Reading detection: if reading_detected was true at any timestamp, flag it with the exact timestamp
+- Eye contact percentage: calculate using total_frames from vision_log_summary and the number of bad frames in notable_events
+- Posture: flag if posture was consistently poor in the notable_events
+- Reading detection: if reading_detected was true in notable_events, flag it with the exact timestamp
 
 ---
 
@@ -411,7 +411,7 @@ Calculate as weighted average:
 
 BEHAVIORAL TIMELINE GENERATION:
 
-Scan the full_transcript and vision_log together. Generate a timestamped list of specific behavioral events — both positive and negative. Be specific with timestamps and exact quotes where possible.
+Scan the full_transcript and vision_log_summary together. Generate a timestamped list of specific behavioral events — both positive and negative. Be specific with timestamps and exact quotes where possible.
 
 Negative events to flag:
 - Rambling beyond 3 minutes on one answer
@@ -420,7 +420,7 @@ Negative events to flag:
 - Stating incorrect time complexity
 - Going silent for more than 30 seconds without saying they are thinking
 - Eye contact loss sustained for more than 20 seconds outside of coding window
-- Reading detected flag from vision_log
+- Reading detected flag from vision_log_summary
 
 Positive events to flag:
 - Correctly stating Big-O complexity before being asked
@@ -433,7 +433,7 @@ Positive events to flag:
 
 CHEATING AND INTEGRITY FLAGS:
 
-Scan the vision_log for reading_detected: true entries.
+Scan the vision_log_summary's notable_events for reading_detected: true entries.
 If any exist, report them with exact timestamps.
 If none exist, do not include this section at all — do not say "no cheating detected." Simply omit the section and output empty array [].
 
@@ -508,5 +508,5 @@ RULES FOR THE JSON:
 - expected_concepts_coverage must have one entry per question that was asked
 - Do not invent events that did not happen in the transcript
 - Do not hallucinate concepts the student mentioned if they did not
-- Base every judgment strictly on evidence in the transcript and vision_log provided
+- Base every judgment strictly on evidence in the transcript and vision_log_summary provided
 """
