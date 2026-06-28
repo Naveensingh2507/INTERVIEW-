@@ -39,7 +39,7 @@ export default function Profile() {
                 {user?.email ? user.email.charAt(0).toUpperCase() : 'U'}
               </div>
               <div>
-                <h2 style={{ fontSize: 24, fontWeight: 800, color: textPrimary, marginBottom: 4 }}>Naveen Singh</h2>
+                <h2 style={{ fontSize: 24, fontWeight: 800, color: textPrimary, marginBottom: 4 }}>{user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'User'}</h2>
                 <p style={{ color: textSub, fontSize: 15 }}>{user?.email}</p>
               </div>
             </div>
