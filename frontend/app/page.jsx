@@ -5,6 +5,49 @@ import { useTheme } from '../context/ThemeContext';
 
 const TYPING_WORDS = ['Software Engineer', 'Product Manager', 'Data Analyst', 'Frontend Dev', 'ML Engineer'];
 
+const MARQUEE_CARDS = [
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2}><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><path d="M12 5v2m0 10v2M5 12H3m18 0h-2"/></svg>,
+    headline: "Live Eye Contact Tracking",
+    desc: "AI detects when you lose focus during your interview."
+  },
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2}><path d="M12 2v20M17 5v14M7 8v8M22 10v4M2 11v2"/></svg>,
+    headline: "Real-Time Voice Analysis",
+    desc: "Catches rambling, filler words, and weak pacing instantly."
+  },
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2}><circle cx="12" cy="5" r="2"/><path d="M12 7v8M8 11h8M9 21l3-6 3 6"/></svg>,
+    headline: "Posture Detection",
+    desc: "Computer vision flags slouching and poor body language live."
+  },
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>,
+    headline: "Anti-Cheat Vision System",
+    desc: "Detects script reading so your practice stays honest."
+  },
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2}><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M12 18a3 3 0 100-6 3 3 0 000 6z"/><path d="M14 2v6h6"/></svg>,
+    headline: "ATS Resume Scoring",
+    desc: "Know your resume score before a recruiter ever sees it."
+  },
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2}><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/><path d="M9 12h.01M15 12h.01"/></svg>,
+    headline: "AI That Interviews Back",
+    desc: "Dynamic follow-up questions just like a real interviewer."
+  },
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2}><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/><path d="M9 9a3 3 0 006 0 3 3 0 00-6 0z"/></svg>,
+    headline: "Time-Aware Pacing",
+    desc: "AI manages question depth based on your session time."
+  },
+  {
+    icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2}><path d="M18 20V10M12 20V4M6 20v-6"/><polygon points="12 2 15 8 22 9 17 14 18 21 12 18 6 21 7 14 2 9 9 8 12 2" fill="#10b981" opacity="0.2"/></svg>,
+    headline: "HireReady Report",
+    desc: "Full performance breakdown with a timestamped behavior timeline."
+  }
+];
+
 function SunIcon() {
   return (
     <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -65,6 +108,35 @@ export default function HomePage() {
 
   return (
     <div style={{ background: C.bg, minHeight: '100vh', color: C.text, fontFamily: "'Inter', sans-serif", overflowX: 'hidden' }}>
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes marqueeScroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(calc(-100% - 20px)); }
+        }
+        .marquee-wrapper {
+          display: flex;
+          gap: 20px;
+        }
+        .marquee-content {
+          display: flex;
+          gap: 20px;
+          animation: marqueeScroll 45s linear infinite;
+        }
+        .marquee-wrapper:hover .marquee-content {
+          animation-play-state: paused;
+        }
+        .marquee-card {
+          width: 280px;
+          transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+        }
+        @media (max-width: 768px) {
+          .marquee-card { width: 220px; }
+        }
+        .marquee-card:hover {
+          transform: translateY(-12px);
+          box-shadow: 0 0 28px rgba(16,185,129,0.35);
+        }
+      `}} />
 
       {/* ── NAVBAR ── */}
       <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: C.navBg, borderBottom: `1px solid ${C.navBorder}`, backdropFilter: 'blur(20px)', height: 70, padding: '0 6vw', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -154,7 +226,11 @@ export default function HomePage() {
         </div>
 
         {/* RIGHT — Floating mockup */}
-        <div style={{ flex: '1 1 45%', position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div 
+          style={{ flex: '1 1 45%', position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', transition: 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)', transformStyle: 'preserve-3d', cursor: 'pointer' }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'perspective(1200px) translateY(-10px) rotateX(6deg) rotateY(-8deg) scale(1.03)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'perspective(1200px) translateY(0) rotateX(0) rotateY(0) scale(1)'; }}
+        >
           <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 20, width: '100%', maxWidth: 600, boxShadow: C.shadow, overflow: 'hidden' }}>
             {/* Browser bar */}
             <div style={{ background: C.inputBg, padding: '12px 20px', borderBottom: `1px solid ${C.border}`, display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -223,22 +299,62 @@ export default function HomePage() {
           </div>
 
           {/* Confidence badge */}
-          <div style={{ position: 'absolute', top: -20, right: -20, background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: '16px 22px', minWidth: 150, boxShadow: C.shadow }}>
-            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: C.muted, marginBottom: 8, textTransform: 'uppercase' }}>Confidence Score</div>
-            <div style={{ fontSize: 38, fontWeight: 900, lineHeight: 1, color: C.text }}>{score} <span style={{ fontSize: 16, color: C.muted, fontWeight: 400 }}>/100</span></div>
-            <div style={{ height: 4, background: C.border, borderRadius: 99, marginTop: 12 }}>
+          <div style={{ position: 'absolute', top: -30, right: -40, background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: '20px 28px', minWidth: 180, boxShadow: C.shadow, transform: 'translateZ(30px)' }}>
+            <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.1em', color: C.muted, marginBottom: 10, textTransform: 'uppercase' }}>Confidence Score</div>
+            <div style={{ fontSize: 48, fontWeight: 900, lineHeight: 1, color: C.text }}>{score} <span style={{ fontSize: 20, color: C.muted, fontWeight: 400 }}>/100</span></div>
+            <div style={{ height: 6, background: C.border, borderRadius: 99, marginTop: 14 }}>
               <div style={{ height: '100%', width: `${score}%`, background: 'linear-gradient(90deg, #10b981, #34d399)', borderRadius: 99, transition: 'width 0.05s' }} />
             </div>
           </div>
 
           {/* Ready badge */}
-          <div style={{ position: 'absolute', bottom: -20, right: 30, background: C.card, border: '1px solid rgba(16,185,129,0.3)', borderRadius: 12, padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 12, boxShadow: C.shadow }}>
-            <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'rgba(16,185,129,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+          <div style={{ position: 'absolute', bottom: -30, right: 10, background: C.card, border: '1px solid rgba(16,185,129,0.3)', borderRadius: 14, padding: '16px 26px', display: 'flex', alignItems: 'center', gap: 16, boxShadow: C.shadow, transform: 'translateZ(40px)' }}>
+            <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(16,185,129,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
             </div>
             <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: C.text }}>HireVault Score</div>
-              <div style={{ fontSize: 13, color: '#10b981', fontWeight: 500 }}>Interview Ready</div>
+              <div style={{ fontSize: 16, fontWeight: 700, color: C.text }}>HireVault Score</div>
+              <div style={{ fontSize: 15, color: '#10b981', fontWeight: 600 }}>Interview Ready</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FEATURE MARQUEE ── */}
+      <section style={{ padding: '80px 0', width: '100%', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ textAlign: 'center', marginBottom: 48, padding: '0 6vw' }}>
+          <h2 style={{ fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.1, color: C.text }}>
+            Everything You Need to <span style={{ color: '#10b981' }}>Walk In Confident</span>
+          </h2>
+          <p style={{ fontSize: 'clamp(16px, 1.3vw, 19px)', color: C.muted, marginTop: 12 }}>
+            Built for students who refuse to get rejected twice.
+          </p>
+        </div>
+
+        <div style={{ position: 'relative', display: 'flex' }}>
+          {/* Edge Fades */}
+          <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '15vw', background: `linear-gradient(to right, ${C.bg}, transparent)`, zIndex: 10, pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '15vw', background: `linear-gradient(to left, ${C.bg}, transparent)`, zIndex: 10, pointerEvents: 'none' }} />
+
+          {/* Scrolling Track */}
+          <div className="marquee-wrapper" style={{ padding: '20px 0' }}>
+            <div className="marquee-content">
+              {MARQUEE_CARDS.map((card, idx) => (
+                <div key={`a-${idx}`} className="marquee-card" style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 20, padding: 24, flexShrink: 0, cursor: 'default' }}>
+                  <div style={{ marginBottom: 16 }}>{card.icon}</div>
+                  <h4 style={{ fontSize: 18, fontWeight: 800, color: C.text, marginBottom: 8, lineHeight: 1.3 }}>{card.headline}</h4>
+                  <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.6 }}>{card.desc}</p>
+                </div>
+              ))}
+            </div>
+            <div className="marquee-content">
+              {MARQUEE_CARDS.map((card, idx) => (
+                <div key={`b-${idx}`} className="marquee-card" style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 20, padding: 24, flexShrink: 0, cursor: 'default' }}>
+                  <div style={{ marginBottom: 16 }}>{card.icon}</div>
+                  <h4 style={{ fontSize: 18, fontWeight: 800, color: C.text, marginBottom: 8, lineHeight: 1.3 }}>{card.headline}</h4>
+                  <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.6 }}>{card.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
