@@ -30,7 +30,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           
           # Clone the Hugging Face space
-          git clone "https://naveensingh2507:${HF_TOKEN}@huggingface.co/spaces/naveensingh2507/interview-backend" hf_space
+          git clone "https://naveenhujime:${HF_TOKEN}@huggingface.co/spaces/naveenhujime/hirevault" hf_space
           
           # Use rsync to copy the backend folder into the space, deleting old files
           rsync -av --delete --exclude '.git' backend/ hf_space/
