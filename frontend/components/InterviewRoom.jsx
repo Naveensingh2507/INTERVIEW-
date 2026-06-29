@@ -24,6 +24,56 @@ export default function InterviewRoom() {
   const vadRef = useRef(null);
   const mpRef = useRef(null);
 
+  const audioElRef = useRef(null);
+  const mediaSourceRef = useRef(null);
+  const sourceBufferRef = useRef(null);
+  const audioQueueRef = useRef([]);
+
+  useEffect(() => {
+    audioElRef.current = new Audio();
+    mediaSourceRef.current = new MediaSource();
+    audioElRef.current.src = URL.createObjectURL(mediaSourceRef.current);
+    
+    audioElRef.current.onended = () => {
+      setWaveState('LISTENING');
+      if (vadRef.current) vadRef.current.resumeListening();
+      
+      // Reset for next turn
+      mediaSourceRef.current = new MediaSource();
+      audioElRef.current.src = URL.createObjectURL(mediaSourceRef.current);
+      mediaSourceRef.current.addEventListener('sourceopen', onSourceOpen);
+    };
+
+    const onSourceOpen = () => {
+      sourceBufferRef.current = mediaSourceRef.current.addSourceBuffer('audio/mpeg');
+      sourceBufferRef.current.addEventListener('updateend', processQueue);
+    };
+    
+    mediaSourceRef.current.addEventListener('sourceopen', onSourceOpen);
+
+    return () => {
+      if (audioElRef.current) {
+        audioElRef.current.pause();
+        audioElRef.current.src = "";
+      }
+    };
+  }, []);
+
+  const processQueue = () => {
+    if (sourceBufferRef.current && !sourceBufferRef.current.updating && audioQueueRef.current.length > 0) {
+      const chunk = audioQueueRef.current.shift();
+      try {
+         sourceBufferRef.current.appendBuffer(chunk);
+      } catch (e) {
+         console.error("Error appending buffer:", e);
+      }
+      
+      if (audioElRef.current.paused) {
+        audioElRef.current.play().catch(e => console.error("Play error:", e));
+      }
+    }
+  };
+
   useEffect(() => {
     const saved = sessionStorage.getItem('interviewConfig');
     if (saved) {
@@ -94,12 +144,24 @@ export default function InterviewRoom() {
         });
 
         setWaveState('SPEAKING');
-        const utterance = new SpeechSynthesisUtterance(aiText);
-        utterance.onend = () => {
-          setWaveState('LISTENING');
-          if (vadRef.current) vadRef.current.resumeListening();
-        };
-        window.speechSynthesis.speak(utterance);
+      } else if (data.type === 'audio_chunk') {
+        // Decode base64 to Uint8Array
+        const binaryString = window.atob(data.audio_base64);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        audioQueueRef.current.push(bytes);
+        processQueue();
+      } else if (data.type === 'audio_end') {
+        if (mediaSourceRef.current && mediaSourceRef.current.readyState === 'open') {
+          try {
+            mediaSourceRef.current.endOfStream();
+          } catch (e) {
+            console.error("endOfStream error:", e);
+          }
+        }
       }
     };
 

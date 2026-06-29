@@ -7,7 +7,7 @@ import os
 from services.supabase_service import get_questions
 from groq import Groq
 from config.prompts import ACTIVE_INTERVIEWER_PROMPT
-
+import edge_tts
 router = APIRouter()
 groq_client = Groq()
 
@@ -123,6 +123,48 @@ async def websocket_endpoint(websocket: WebSocket):
 
                 session_memory = [{"role": "system", "content": system_content}]
 
+                # Make the AI introduce itself and ask the first question immediately
+                try:
+                    chat_completion = groq_client.chat.completions.create(
+                        messages=session_memory,
+                        model=LIVE_MODEL,
+                        temperature=0.7,
+                        max_tokens=200
+                    )
+                    ai_response = chat_completion.choices[0].message.content
+                except Exception as e:
+                    print(f"LLM Error: {e}")
+                    ai_response = f"Hello {student_name}, let's begin the interview!"
+
+                session_memory.append({"role": "assistant", "content": ai_response})
+
+                await websocket.send_text(json.dumps({
+                    "type": "ai_response",
+                    "ai_text": ai_response,
+                    "user_transcript": "",
+                    "timestamp": "00:00"
+                }))
+
+                # Generate and stream audio using edge-tts
+                try:
+                    communicate = edge_tts.Communicate(ai_response, "en-US-GuyNeural")
+                    async for chunk in communicate.stream():
+                        if chunk["type"] == "audio":
+                            audio_b64 = base64.b64encode(chunk["data"]).decode("utf-8")
+                            await websocket.send_text(json.dumps({
+                                "type": "audio_chunk",
+                                "audio_base64": audio_b64
+                            }))
+                    
+                    await websocket.send_text(json.dumps({
+                        "type": "audio_end"
+                    }))
+                except Exception as e:
+                    print(f"TTS Streaming Error: {e}")
+                    await websocket.send_text(json.dumps({
+                        "type": "audio_end"
+                    }))
+
             # ---------------------------------------------------------------
             # USER TURN: Transcribe, trim context, call LLM
             # ---------------------------------------------------------------
@@ -188,6 +230,28 @@ async def websocket_endpoint(websocket: WebSocket):
                     "user_transcript": user_transcript,
                     "timestamp": "00:00"
                 }))
+
+                # Generate and stream audio using edge-tts
+                try:
+                    communicate = edge_tts.Communicate(ai_response, "en-US-GuyNeural")
+                    async for chunk in communicate.stream():
+                        if chunk["type"] == "audio":
+                            audio_b64 = base64.b64encode(chunk["data"]).decode("utf-8")
+                            await websocket.send_text(json.dumps({
+                                "type": "audio_chunk",
+                                "audio_base64": audio_b64
+                            }))
+                    
+                    # Signal that audio stream is complete
+                    await websocket.send_text(json.dumps({
+                        "type": "audio_end"
+                    }))
+                except Exception as e:
+                    print(f"TTS Streaming Error: {e}")
+                    # Signal end even on error so frontend doesn't hang
+                    await websocket.send_text(json.dumps({
+                        "type": "audio_end"
+                    }))
 
     except WebSocketDisconnect:
         print("Client disconnected from websocket")

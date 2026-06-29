@@ -81,19 +81,13 @@ export class VADController {
         reader.readAsDataURL(audioBlob);
         reader.onloadend = () => {
           const base64String = reader.result.split(',')[1];
-          this.playFiller();
           this.onTurnEnd(base64String);
         };
       };
     }
   }
 
-  playFiller() {
-    const filler = audioFillers[Math.floor(Math.random() * audioFillers.length)];
-    const utterance = new SpeechSynthesisUtterance(filler);
-    utterance.volume = 0.5;
-    window.speechSynthesis.speak(utterance);
-  }
+  // playFiller() removed to prevent native TTS from speaking
 
   resumeListening() {
     this.silenceStart = null;
