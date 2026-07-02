@@ -216,7 +216,7 @@ export default function HomePage() {
           </p>
 
           <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 40 }}>
-            <button onClick={() => router.push(user ? '/dashboard' : '/login')}
+            <button onClick={() => router.push(user ? '/interview/setup' : '/login')}
               style={{ padding: '16px 32px', background: '#10b981', color: '#fff', border: 'none', borderRadius: 12, fontSize: 17, fontWeight: 800, cursor: 'pointer', boxShadow: '0 0 40px rgba(16,185,129,0.4)', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
               onMouseEnter={e => { e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 50px rgba(16,185,129,0.55)'; }}
               onMouseLeave={e => { e.currentTarget.style.background = '#10b981'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(16,185,129,0.4)'; }}
@@ -503,12 +503,12 @@ export default function HomePage() {
               Join thousands of students who cracked interviews at top companies using HireVault.
             </p>
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button onClick={() => router.push('/interview/setup')}
+              <button onClick={() => router.push(user ? '/interview/setup' : '/login')}
                 style={{ padding: '17px 36px', background: '#10b981', color: '#fff', border: 'none', borderRadius: 12, fontSize: 17, fontWeight: 800, cursor: 'pointer', boxShadow: '0 0 50px rgba(16,185,129,0.45)', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
                 onMouseEnter={e => { e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
                 onMouseLeave={e => { e.currentTarget.style.background = '#10b981'; e.currentTarget.style.transform = 'translateY(0)'; }}
               >Start Free AI Interview</button>
-              <button onClick={() => router.push('/audit')}
+              <button onClick={() => router.push(user ? '/audit' : '/login')}
                 style={{ padding: '17px 32px', background: C.ghost, color: C.text, border: `1px solid ${C.ghostBorder}`, borderRadius: 12, fontSize: 17, fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s', fontFamily: "'Inter', sans-serif" }}
                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
